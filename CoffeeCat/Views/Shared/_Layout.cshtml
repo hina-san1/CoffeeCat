@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html data-theme="light">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/Content/styles/output.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&display=swap" rel="stylesheet">
+</head>
+<body ng-app="CoffeeCat" ng-controller="CoffeeCatController">
+    <div class="bg-coffee-white text-coffee-light">
+        @RenderBody()
+    </div>
+
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/MyScripts/Module.js"></script>
+    <script src="~/Scripts/MyScripts/Service.js"></script>
+    <script src="~/Scripts/MyScripts/Controller.js"></script>
+</body>
+</html>

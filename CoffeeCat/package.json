@@ -1,0 +1,23 @@
+{
+  "name": "coffeecat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @tailwindcss/cli -i ./Content/styles/input.css -o ./Content/styles/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.1",
+    "tailwind-animations": "^1.0.1",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "daisyui": "^5.5.19",
+    "tailwindcss-motion": "^1.1.1"
+  }
+}

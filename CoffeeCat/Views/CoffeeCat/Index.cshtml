@@ -1,0 +1,142 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="max-w-7xl min-h-screen w-full mx-auto px-8 flex flex-col">
+    <nav class="py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <img src="~/Content/assets/logo-coffee-cat.png" alt="logo" class="h-10 w-auto" />
+            <h2 class="text-xl font-bold">Coffee Cat</h2>
+        </div>
+
+        <div class="hidden lg:flex gap-14 font-medium">
+            <a href="#home" class="hover:text-coffee-dark hover:underline underline-offset-2 transition">Home</a>
+            <a href="#about" class="hover:text-coffee-dark hover:underline underline-offset-2 transition">About</a>
+            <a href="#contact" class="hover:text-coffee-dark hover:underline underline-offset-2 transition">Contact</a>
+            <a class="hover:text-coffee-dark hover:underline underline-offset-2 transition cursor-pointer" ng-click="redirect('Menu')">Menu</a>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-4">
+            <button class="px-4 py-2 font-semibold hover:text-coffee-dark hover:underline underline-offset-2 transition" ng-click="redirect('Signup')">Sign Up</button>
+            <button class="px-6 py-2 font-semibold text-sm bg-coffee-light text-white border rounded-3xl hover:bg-coffee-dark transition" ng-click="redirect('Login')">Log In</button>
+        </div>
+
+        <div class="lg:hidden">
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-square">
+                    <svg class="w-6 h-6 text-coffee-light" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
+                    </svg>
+                </div>
+
+                <ul tabindex="0" class="dropdown-content menu bg-white rounded-box z-[99] w-52 p-2 shadow-lg border border-gray-200 mt-2 text-coffee-light">
+                    <li><a class="hover:text-coffee-light" ng-click="redirect('Index')">Home</a></li>
+                    <li><a class="hover:text-coffee-light" ng-click="redirect('Signup')">Signup</a></li>
+                    <li><a class="hover:text-coffee-light" ng-click="redirect('Login')">Login</a></li>
+                    <li><a class="hover:text-coffee-light" ng-click="redirect('Menu')">Menu</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="flex-1 flex justify-center lg:justify-between items-center
+             motion-translate-y-in-100">
+        <div class="space-y-6 text-center lg:text-left">
+            <h2 class="text-5xl leading-18 md:text-6xl font-bold">Where Coffee Meets<br />
+                <span class="text-coffee-dark">Comfort </span>Warmly</h2>
+            <p class="leading-relaxed text-gray-600">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br />
+                sed do eiusmod tempor incididunt ut labore et dolore <br />
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+            </p>
+
+            <a class="inline-block btn-coffee" ng-click="redirect('Menu')">
+                Order Now
+            </a>
+        </div>
+
+        <div class="hidden lg:block overflow-hidden">
+            <img src="~/Content/assets/side background.png" alt="coffee background"
+                 class="h-130 rotate-330" />
+        </div>
+    </section>
+</div>
+
+<section id="about" class="max-w-7xl w-full mx-auto py-20 px-8 flex flex-col gap-12 items-center text-coffee-light
+         timeline-view animate-blurred-fade-in animate-range-[entry_10%_contain_30%]">
+    <div class="text-center space-y-4">
+        <h2 class="text-5xl lg:text-6xl font-bold">About Us</h2>
+        <p class="leading-relaxed text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt<br />
+            ut labore et dolore aliqua. Ut enim ad minim veniam.
+        </p>
+    </div>
+
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center lg:place-items-stretch">
+
+        <div class="w-full max-w-80 shadow-lg flex flex-col items-center p-6 gap-4 bg-white rounded-3xl lg:justify-self-start">
+            <img src="~/Content/assets/best service.png" alt="best service" class="h-20 w-auto" />
+            <h2 class="text-2xl font-bold">Best Service</h2>
+            <p class="text-center text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <div class="w-full max-w-80 shadow-lg flex flex-col items-center p-6 gap-4 bg-white rounded-3xl lg:justify-self-center">
+            <img src="~/Content/assets/high quality.png" alt="high quality" class="h-20 w-auto" />
+            <h2 class="text-2xl font-bold">High Quality</h2>
+            <p class="text-center text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <div class="w-full max-w-80 shadow-lg flex flex-col items-center p-6 gap-4 bg-white md:col-span-2 rounded-3xl lg:col-span-1 lg:justify-self-end">
+            <img src="~/Content/assets/premium beans.png" alt="premium beans" class="h-20 w-auto" />
+            <h2 class="text-2xl font-bold">Premium Beans</h2>
+            <p class="text-center text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="max-w-4xl w-full mx-auto py-20 px-8 text-coffee-light
+         timeline-view animate-blurred-fade-in animate-range-[entry_10%_contain_30%]">
+    <div class="flex flex-col gap-12 items-center">
+
+        <div class="text-center space-y-8">
+            <h2 class="text-5xl lg:text-6xl font-bold">Get in Touch</h2>
+            <p class="text-gray-600 leading-relaxed">
+                Have questions about us? Drop us a message and we'll get back to you faster than a caffeine kick!
+            </p>
+        </div>
+
+        <div class="w-full bg-white shadow-lg rounded-3xl p-8 border border-gray-200">
+            <form class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                    <input type="text" placeholder="Mary Joy"
+                           class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none placeholder-gray-400 font-light" required />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <input type="email" placeholder="example@gmail.com"
+                           class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none placeholder-gray-400 font-light" required />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+                    <textarea rows="4" placeholder="How can we help?"
+                              class="w-full px-4 py-2 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none resize-none placeholder-gray-400 font-light" required></textarea>
+                </div>
+
+                <button type="submit"
+                        class="w-full btn-coffee py-6 transition-all duration-300">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer class="footer sm:footer-horizontal footer-center bg-coffee-light text-white p-4">
+    <aside>
+        <p>Copyright © <span>{{ year }}</span> - All right reserved by Coffee Cat</p>
+    </aside>
+</footer>
+

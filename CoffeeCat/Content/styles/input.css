@@ -1,0 +1,17 @@
+﻿@import "tailwindcss";
+@import 'tailwind-animations';
+@plugin "daisyui";
+@plugin "tailwindcss-motion";
+
+@theme {
+    --font-sans: Inter;
+    --color-coffee-white: #F9F8F6;
+    --color-coffee-light: #967259;
+    --color-coffee-dark: #634832;
+}
+
+@layer components {
+    .btn-coffee {
+        @apply btn bg-coffee-light text-white text-sm rounded-full px-6 py-2 hover:bg-coffee-dark transition cursor-pointer;
+    }
+}
