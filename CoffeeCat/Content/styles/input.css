@@ -1,5 +1,6 @@
 ﻿@import "tailwindcss";
 @import 'tailwind-animations';
+@import url('input.css');
 @plugin "daisyui";
 @plugin "tailwindcss-motion";
 

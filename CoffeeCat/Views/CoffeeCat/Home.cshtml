@@ -16,9 +16,8 @@
             <a class="hover:text-coffee-dark hover:underline underline-offset-2 transition cursor-pointer" ng-click="redirect('Menu')">Menu</a>
         </div>
 
-        <div class="hidden lg:flex items-center gap-4">
-            <button class="px-4 py-2 font-semibold hover:text-coffee-dark hover:underline underline-offset-2 transition" ng-click="redirect('Signup')">Sign Up</button>
-            <button class="px-6 py-2 font-semibold text-sm bg-coffee-light text-white border rounded-3xl hover:bg-coffee-dark transition" ng-click="redirect('Login')">Log In</button>
+        <div class="hidden lg:block">
+            <button class="px-6 py-2 font-semibold text-sm bg-coffee-light text-white border rounded-3xl hover:bg-coffee-dark transition" ng-click="redirect('Login')">Log Out</button>
         </div>
 
         <div class="lg:hidden">
@@ -30,10 +29,12 @@
                 </div>
 
                 <ul tabindex="0" class="dropdown-content menu bg-white rounded-box z-[99] w-52 p-2 shadow-lg border border-gray-200 mt-2 text-coffee-light">
-                    <li><a class="hover:text-coffee-light" ng-click="redirect('Index')">Home</a></li>
-                    <li><a class="hover:text-coffee-light" ng-click="redirect('Signup')">Signup</a></li>
-                    <li><a class="hover:text-coffee-light" ng-click="redirect('Login')">Login</a></li>
+                    <li><a href="#home" class="hover:text-coffee-light">Home</a></li>
+                    <li><a href="#about" class="hover:text-coffee-light">About</a></li>
+                    <li><a href="#contact" class="hover:text-coffee-light">Contact</a></li>
                     <li><a class="hover:text-coffee-light" ng-click="redirect('Menu')">Menu</a></li>
+                    <li><a class="hover:text-coffee-light" ng-click="redirect('Login')">Logout</a></li>
+
                 </ul>
             </div>
         </div>

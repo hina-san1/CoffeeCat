@@ -17,7 +17,7 @@
 
         let userArray = JSON.parse(sessionStorage.getItem("userInfo")) || [];
 
-        let emailExists = userArray.find(user => user.Email === $scope.email);
+        let emailExists = userArray.find(user => user.Email.trim() === $scope.email.trim());
 
         if (emailExists) {
             Swal.fire({
@@ -47,11 +47,16 @@
         });
     };
 
+    // Getting User from Session Storage
+    $scope.getUsers = function () {
+        return JSON.parse(sessionStorage.getItem("userInfo")) || [];
+    }
+
     // --- Login Page Logic ---
     $scope.login = function () {
-        let userList = JSON.parse(sessionStorage.getItem("userInfo")) || [];
+        $scope.getUsers();
 
-        let foundUser = userList.find(userData =>
+        let foundUser = $scope.getUsers().find(userData =>
             userData.Email === $scope.checkEmail &&
             userData.Password === $scope.checkPassword
         );
@@ -159,7 +164,6 @@
     };
 
     // --- Admin Page Logic ---
-    let getUsers = sessionStorage.getItem("UserInfo");
 });
 
 
