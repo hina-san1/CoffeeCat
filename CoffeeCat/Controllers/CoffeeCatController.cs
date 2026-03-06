@@ -9,10 +9,6 @@ namespace CoffeeCat.Controllers
     public class CoffeeCatController : Controller
     {
         // GET: CoffeeCat
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public ActionResult Signup()
         {
@@ -20,6 +16,11 @@ namespace CoffeeCat.Controllers
         }
 
         public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult Home()
         {
             return View();
         }

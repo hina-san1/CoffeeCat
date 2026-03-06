@@ -1,18 +1,83 @@
 ﻿app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
 
-    // --- Index Page Logic ---
     $scope.redirect = function (page) {
         window.location.href = "/CoffeeCat/" + page;
     }
-    $scope.year = new Date().getFullYear();
 
     // --- Signup Page Logic ---
-    $scope.userInfo = [];
+    $scope.signup = function () {
+        if ($scope.password !== $scope.confirmPassword) {
+            Swal.fire({
+                title: "Error",
+                text: "Passwords do not match!",
+                icon: "error"
+            });
+            return;
+        }
 
-    $scope.userData = {
-        Email: $scope.email,
-        Password: $scope.password
-    }
+        let userArray = JSON.parse(sessionStorage.getItem("userInfo")) || [];
+
+        let emailExists = userArray.find(user => user.Email === $scope.email);
+
+        if (emailExists) {
+            Swal.fire({
+                title: "Error",
+                text: "This email is already registered. Please use a different one or Login.",
+                icon: "error"
+            });
+            return;
+        }
+
+        let userData = {
+            Email: $scope.email,
+            Password: $scope.password
+        };
+
+        userArray.push(userData);
+        sessionStorage.setItem("userInfo", JSON.stringify(userArray));
+
+        Swal.fire({
+            title: "Success",
+            text: "Sign up successful!",
+            icon: "success"
+        }).then((result) => {
+            $scope.$apply(() => {
+                $scope.redirect('Login');
+            });
+        });
+    };
+
+    // --- Login Page Logic ---
+    $scope.login = function () {
+        let userList = JSON.parse(sessionStorage.getItem("userInfo")) || [];
+
+        let foundUser = userList.find(userData =>
+            userData.Email === $scope.checkEmail &&
+            userData.Password === $scope.checkPassword
+        );
+
+        if (foundUser) {
+            Swal.fire({
+                title: "Success",
+                text: "Login successful!",
+                icon: "success"
+            }).then((result) => {
+                $scope.$apply(() => {
+                    $scope.redirect('Home');
+                });
+            });
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Invalid email or password!",
+                icon: "error"
+            });
+            return;
+        }
+    };
+
+    // --- Index Page Logic ---
+    $scope.year = new Date().getFullYear();
 
     // --- Menu Page Logic ---
 
@@ -52,7 +117,7 @@
 
     // 2. Add to cart logic
     $scope.addToCart = function (item) {
-        if (!item.selectedSize) return; 
+        if (!item.selectedSize) return;
 
         var existingItem = $scope.cart.find(function (c) {
             return c.name === item.name && c.size === item.selectedSize;
@@ -86,10 +151,15 @@
     };
 
     $scope.getTax = function () {
-        return $scope.getSubtotal() * 0.12; // Example 12%
+        return $scope.getSubtotal() * 0.12;
     };
 
     $scope.getTotal = function () {
         return $scope.getSubtotal() + $scope.getTax();
     };
+
+    // --- Admin Page Logic ---
+    let getUsers = sessionStorage.getItem("UserInfo");
 });
+
+

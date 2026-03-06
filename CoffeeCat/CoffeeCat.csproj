@@ -965,7 +965,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\CoffeeCat\Index.cshtml" />
+    <Content Include="Views\CoffeeCat\Home.cshtml" />
     <Content Include="Views\CoffeeCat\Signup.cshtml" />
     <Content Include="Views\CoffeeCat\Login.cshtml" />
     <Content Include="Views\CoffeeCat\Menu.cshtml" />
