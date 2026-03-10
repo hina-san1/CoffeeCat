@@ -969,8 +969,10 @@
     <Content Include="Views\CoffeeCat\Signup.cshtml" />
     <Content Include="Views\CoffeeCat\Login.cshtml" />
     <Content Include="Views\CoffeeCat\Menu.cshtml" />
-    <Content Include="Views\CoffeeCat\Admin.cshtml" />
+    <Content Include="Views\CoffeeCat\AdminDashboard.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\CoffeeCat\UsersTable.cshtml" />
+    <Content Include="Views\CoffeeCat\AdminsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

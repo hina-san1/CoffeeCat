@@ -30,7 +30,17 @@ namespace CoffeeCat.Controllers
             return View();
         }
 
-        public ActionResult Admin()
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult UsersTable()
+        {
+            return View();
+        }
+
+        public ActionResult AdminsTable()
         {
             return View();
         }
