@@ -2,12 +2,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="min-h-screen flex flex-col">
+<div class="h-screen flex flex-col">
 
-    <div class="drawer lg:drawer-open flex-1">
+    <div class="drawer lg:drawer-open flex-1 h-full min-h-0">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
 
-        <div class="drawer-content flex flex-col">
+        <div class="drawer-content flex flex-col h-full min-h-0">
             <nav class="py-3 px-4 flex items-center justify-between lg:hidden">
                 <div class="flex items-center gap-2">
                     <label for="my-drawer-3" class="btn btn-ghost lg:hidden">
@@ -20,104 +20,157 @@
                 </div>
             </nav>
 
-            <main class="flex-1 p-6 space-y-8">
-                <!-- Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-4">
-                    <div class="w-full rounded-lg bg-white shadow-lg p-4 space-y-6">
-                        <h2 class="text-2xl font-semibold">1234</h2>
-                        <h3 class="text-sm">Orders</h3>
-                    </div>
+<main class="flex-1 p-6 space-y-6 flex flex-col min-h-0 overflow-auto lg:overflow-hidden">
+    <!-- Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="w-full rounded-lg bg-white shadow-lg p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium uppercase tracking-wide">Total Orders</p>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">1,234</h2>
+                <p class="text-sm text-green-600 mt-2">
+                    <span class="font-semibold">↑ 12%</span> from last month
+                </p>
+            </div>
+            <div class="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </div>
+        </div>
+    </div>
 
-                    <div class="w-full rounded-lg bg-white shadow-lg p-4 space-y-6">
-                        <h2 class="text-2xl font-semibold">1234</h2>
-                        <h3 class="text-sm">Sales</h3>
-                    </div>
+    <div class="w-full rounded-lg bg-white shadow-lg p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium uppercase tracking-wide">Total Sales</p>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">₱54,320</h2>
+                <p class="text-sm text-green-600 mt-2">
+                    <span class="font-semibold">↑ 8%</span> from last month
+                </p>
+            </div>
+            <div class="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+        </div>
+    </div>
 
-                    <div class="w-full rounded-lg bg-white shadow-lg p-4 space-y-6">
-                        <h2 class="text-2xl font-semibold">1234</h2>
-                        <h3 class="text-sm">Customers</h3>
-                    </div>
-                </div>
-                
-                <!-- Table -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="overflow-x-auto bg-white">
-                        <table class="table">
-                            <!-- head -->
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Job</th>
-                                    <th>Favorite Color</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- row 1 -->
-                                <tr>
-                                    <th>1</th>
-                                    <td>Cy Ganderton</td>
-                                    <td>Quality Control Specialist</td>
-                                    <td>Blue</td>
-                                </tr>
-                                <!-- row 2 -->
-                                <tr>
-                                    <th>2</th>
-                                    <td>Hart Hagerty</td>
-                                    <td>Desktop Support Technician</td>
-                                    <td>Purple</td>
-                                </tr>
-                                <!-- row 3 -->
-                                <tr>
-                                    <th>3</th>
-                                    <td>Brice Swyre</td>
-                                    <td>Tax Accountant</td>
-                                    <td>Red</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <div class="w-full rounded-lg bg-white shadow-lg p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium uppercase tracking-wide">Total Customers</p>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">892</h2>
+                <p class="text-sm text-green-600 mt-2">
+                    <span class="font-semibold">↑ 5%</span> from last month
+                </p>
+            </div>
+            <div class="h-12 w-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    <div class="overflow-x-auto bg-white">
-                        <table class="table">
-                            <!-- head -->
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>User ID</th>
-                                    <th>Full Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Password</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- row 1 -->
-                                <tr>
-                                    <th>1</th>
-                                    <td>Cy Ganderton</td>
-                                    <td>Quality Control Specialist</td>
-                                    <td>Blue</td>
-                                </tr>
-                                <!-- row 2 -->
-                                <tr>
-                                    <th>2</th>
-                                    <td>Hart Hagerty</td>
-                                    <td>Desktop Support Technician</td>
-                                    <td>Purple</td>
-                                </tr>
-                                <!-- row 3 -->
-                                <tr>
-                                    <th>3</th>
-                                    <td>Brice Swyre</td>
-                                    <td>Tax Accountant</td>
-                                    <td>Red</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-medium mb-2">Monthly Revenue</h3>
+            <div class="h-36 lg:h-40">
+                <canvas id="salesBarChart" class="w-full h-full"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-medium mb-2">Popular Drinks</h3>
+            <div class="h-36 lg:h-40 flex items-center justify-center">
+                <canvas id="popularPieChart" class="w-full max-w-xs h-full"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tables - takes remaining height on large screens -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:flex-1 lg:min-h-0">
+        <div class="overflow-auto bg-white lg:h-full">
+            <table class="table">
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Job</th>
+                        <th>Favorite Color</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- row 1 -->
+                    <tr>
+                        <th>1</th>
+                        <td>Cy Ganderton</td>
+                        <td>Quality Control Specialist</td>
+                        <td>Blue</td>
+                    </tr>
+                    <!-- row 2 -->
+                    <tr>
+                        <th>2</th>
+                        <td>Hart Hagerty</td>
+                        <td>Desktop Support Technician</td>
+                        <td>Purple</td>
+                    </tr>
+                    <!-- row 3 -->
+                    <tr>
+                        <th>3</th>
+                        <td>Brice Swyre</td>
+                        <td>Tax Accountant</td>
+                        <td>Red</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="overflow-auto bg-white lg:h-full">
+            <table class="table">
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>User ID</th>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- row 1 -->
+                    <tr>
+                        <th>1</th>
+                        <td>Cy Ganderton</td>
+                        <td>Quality Control Specialist</td>
+                        <td>Blue</td>
+                    </tr>
+                    <!-- row 2 -->
+                    <tr>
+                        <th>2</th>
+                        <td>Hart Hagerty</td>
+                        <td>Desktop Support Technician</td>
+                        <td>Purple</td>
+                    </tr>
+                    <!-- row 3 -->
+                    <tr>
+                        <th>3</th>
+                        <td>Brice Swyre</td>
+                        <td>Tax Accountant</td>
+                        <td>Red</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
         </div>
 
         <div class="drawer-side">
@@ -132,4 +185,74 @@
     </div>
 </div>
 
-<!-- Admin savepoint -->
+
+@section Scripts {
+    <script>
+        (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                var canvas = document.getElementById('salesBarChart');
+                if (!canvas) return;
+                if (typeof Chart === 'undefined') {
+                    console.error('Chart.js not loaded');
+                    return;
+                }
+
+                var ctx = canvas.getContext('2d');
+
+                var labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+                var data = [1200, 1500, 900, 1300, 1700, 1600, 1800, 1400, 1100, 1900, 2000, 2200];
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Revenue',
+                            data: data,
+                            backgroundColor: 'rgba(59,130,246,0.8)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+
+                // Popular drinks pie chart
+                var pieCanvas = document.getElementById('popularPieChart');
+                if (pieCanvas) {
+                    var pieCtx = pieCanvas.getContext('2d');
+                    var pieLabels = ['Espresso', 'Latte', 'Cappuccino', 'Matcha', 'Iced Coffee'];
+                    var pieData = [45, 80, 30, 25, 60];
+                    new Chart(pieCtx, {
+                        type: 'pie',
+                        data: {
+                            labels: pieLabels,
+                            datasets: [{
+                                data: pieData,
+                                backgroundColor: [
+                                    'rgba(75, 85, 99, 0.9)',
+                                    'rgba(59,130,246,0.9)',
+                                    'rgba(234,88,12,0.9)',
+                                    'rgba(16,185,129,0.9)',
+                                    'rgba(168,85,247,0.9)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'right' }
+                            }
+                        }
+                    });
+                }
+            });
+        })();
+    </script>
+}
