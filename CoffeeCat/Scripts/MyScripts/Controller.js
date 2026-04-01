@@ -4,91 +4,17 @@
         window.location.href = "/CoffeeCat/" + page;
     }
 
-    // --- Signup Page Logic ---
-    $scope.signup = function () {
-        if ($scope.password !== $scope.confirmPassword) {
-            Swal.fire({
-                title: "Error",
-                text: "Passwords do not match!",
-                icon: "error"
-            });
-            return;
-        }
-
-        let userArray = JSON.parse(sessionStorage.getItem("userInfo")) || [];
-
-        let emailExists = userArray.find(user => user.Email.trim() === $scope.email.trim());
-
-        if (emailExists) {
-            Swal.fire({
-                title: "Error",
-                text: "This email is already registered. Please use a different one or Login.",
-                icon: "error"
-            });
-            return;
-        }
-
-        let userData = {
-            Email: $scope.email,
-            Password: $scope.password
-        };
-
-        userArray.push(userData);
-        sessionStorage.setItem("userInfo", JSON.stringify(userArray));
-
-        Swal.fire({
-            title: "Success",
-            text: "Sign up successful!",
-            icon: "success"
-        }).then((result) => {
-            $scope.$apply(() => {
-                $scope.redirect('Login');
-            });
-        });
-    };
-
-    // Getting User from Session Storage
-    $scope.getUsers = function () {
-        return JSON.parse(sessionStorage.getItem("userInfo")) || [];
-    }
-
-    // --- Login Page Logic ---
-    $scope.login = function () {
-        $scope.getUsers();
-
-        let foundUser = $scope.getUsers().find(userData =>
-            userData.Email === $scope.checkEmail &&
-            userData.Password === $scope.checkPassword
-        );
-
-        if (foundUser) {
-            Swal.fire({
-                title: "Success",
-                text: "Login successful!",
-                icon: "success"
-            }).then((result) => {
-                $scope.$apply(() => {
-                    $scope.redirect('Home');
-                });
-            });
-        } else {
-            Swal.fire({
-                title: "Error",
-                text: "Invalid email or password!",
-                icon: "error"
-            });
-            return;
-        }
-    };
-
-    // --- Index Page Logic ---
     $scope.year = new Date().getFullYear();
-
-    // --- Menu Page Logic ---
-
     $scope.selectedCategory = 'all';
+    $scope.cart = [];
 
-    // Category Filter
+    // Size configuration
+    $scope.sizes = [
+        { name: 'Small', extra: 0 },
+        { name: 'Medium', extra: 15 },
+        { name: 'Large', extra: 30 }
+    ];
+
     $scope.setCategory = function (category) {
         $scope.selectedCategory = category;
     };
@@ -98,31 +24,33 @@
         return item.category === $scope.selectedCategory;
     };
 
-    $scope.cart = [];
+    $scope.LoremIpsum = "Experience the rich, smooth blend of our premium beans, crafted to perfection for your daily caffeine fix.";
 
-
-    $scope.LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
     $scope.menuItems = [
-        { id: 1, name: 'Iced Americano', price: 110.00, category: 'iced', image: '/Content/assets/iced americano.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 2, name: 'Iced Cappuccino', price: 130.00, category: 'iced', image: '/Content/assets/iced cappuccino.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 3, name: 'Iced Caramel Macchiato', price: 150.00, category: 'iced', image: '/Content/assets/iced caramel macchiato.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 4, name: 'Iced Spanish Latte', price: 145.00, category: 'iced', image: '/Content/assets/iced spanish latte.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 5, name: 'Iced Vanilla Latte', price: 140.00, category: 'iced', image: '/Content/assets/iced vanilla latte.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 6, name: 'Hot Americano', price: 100.00, category: 'hot', image: '/Content/assets/hot americano.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 7, name: 'Hot Cappuccino', price: 125.00, category: 'hot', image: '/Content/assets/hot cappuccino.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 8, name: 'Hot Espresso', price: 110.00, category: 'hot', image: '/Content/assets/hot espresso.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 9, name: 'Matcha Latte', price: 150.00, category: 'matcha', image: '/Content/assets/matcha latte.png', description: $scope.LoremIpsum, selectedSize: null },
-        { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.LoremIpsum, selectedSize: null }
+        { id: 1, name: 'Iced Americano', price: 110.00, category: 'iced', image: '/Content/assets/iced americano.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 2, name: 'Iced Cappuccino', price: 130.00, category: 'iced', image: '/Content/assets/iced cappuccino.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 3, name: 'Iced Caramel Macchiato', price: 150.00, category: 'iced', image: '/Content/assets/iced caramel macchiato.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 4, name: 'Iced Spanish Latte', price: 145.00, category: 'iced', image: '/Content/assets/iced spanish latte.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 5, name: 'Iced Vanilla Latte', price: 140.00, category: 'iced', image: '/Content/assets/iced vanilla latte.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 6, name: 'Hot Americano', price: 100.00, category: 'hot', image: '/Content/assets/hot americano.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 7, name: 'Hot Cappuccino', price: 125.00, category: 'hot', image: '/Content/assets/hot cappuccino.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 8, name: 'Hot Espresso', price: 110.00, category: 'hot', image: '/Content/assets/hot espresso.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 9, name: 'Matcha Latte', price: 150.00, category: 'matcha', image: '/Content/assets/matcha latte.png', description: $scope.LoremIpsum, selectedSize: 'S' },
+        { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.LoremIpsum, selectedSize: 'S' }
     ];
 
-    // 1. Function to pick size
-    $scope.selectSize = function (item, size) {
-        item.selectedSize = size;
+    $scope.selectSize = function (item, sizeLabel) {
+        item.selectedSize = sizeLabel;
     };
 
-    // 2. Add to cart logic
+    $scope.getItemDisplayPrice = function (item) {
+        const sizeInfo = $scope.sizes.find(s => s.label === item.selectedSize);
+        return item.price + (sizeInfo ? sizeInfo.extra : 0);
+    };
+
     $scope.addToCart = function (item) {
-        if (!item.selectedSize) return;
+        const sizeInfo = $scope.sizes.find(s => s.label === item.selectedSize);
+        const finalPrice = item.price + sizeInfo.extra;
 
         var existingItem = $scope.cart.find(function (c) {
             return c.name === item.name && c.size === item.selectedSize;
@@ -133,7 +61,8 @@
         } else {
             $scope.cart.push({
                 name: item.name,
-                price: item.price,
+                basePrice: item.price,
+                totalPrice: finalPrice,
                 image: item.image,
                 size: item.selectedSize,
                 quantity: 1
@@ -141,7 +70,6 @@
         }
     };
 
-    // 3. Plus/Minus Buttons
     $scope.updateQuantity = function (cartItem, amount) {
         cartItem.quantity += amount;
         if (cartItem.quantity <= 0) {
@@ -150,9 +78,8 @@
         }
     };
 
-    // 4. Calculations 
     $scope.getSubtotal = function () {
-        return $scope.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        return $scope.cart.reduce((sum, item) => sum + (item.totalPrice * item.quantity), 0);
     };
 
     $scope.getTax = function () {
@@ -162,8 +89,4 @@
     $scope.getTotal = function () {
         return $scope.getSubtotal() + $scope.getTax();
     };
-
-    // --- Admin Page Logic ---
 });
-
-
