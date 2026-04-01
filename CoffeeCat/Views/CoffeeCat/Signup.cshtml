@@ -2,15 +2,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="bg-white min-h-screen flex items-center justify-center">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-full">
+<section class="bg-coffee-white flex items-center justify-center min-h-screen">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto w-full max-w-6xl">
 
         <a href="#" class="flex items-center mb-8 text-2xl font-bold text-coffee-light">
             <img class="w-10 h-10 mr-3 object-contain" src="~/Content/assets/logo-coffee-cat.png" alt="logo">
             <span>Coffee Cat</span>
         </a>
 
-        <div class="w-full bg-white shadow-lg rounded-3xl p-8 border border-gray-200 sm:max-w-md
+        <div class="w-full bg-white shadow-lg rounded-3xl p-8 md:p-12 border border-gray-200 mt-10
              motion-translate-y-in-100">
             <div class="space-y-6">
                 <h1 class="text-3xl font-bold text-coffee-light text-center">
@@ -18,30 +18,63 @@
                 </h1>
 
                 <form name="signupForm" class="space-y-5" ng-submit="signup()">
-                    <div>
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Your email</label>
-                        <input type="email" name="email" id="email"
-                               class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
-                               placeholder="example@gmail.com" required
-                               ng-model="email">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="first_name" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                            <input type="text" name="first_name" id="first_name"
+                                   maxlength="50"
+                                   placeholder="Enter First Name"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   ng-model="firstName">
+                        </div>
+
+                        <div>
+                            <label for="last_name" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                            <input type="text" name="last_name" id="last_name"
+                                   maxlength="30"
+                                   placeholder="Enter Last Name"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   ng-model="lastName">
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                        <input type="password" name="password" id="password"
-                               maxlength="16"
-                               placeholder="••••••••"
-                               class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
-                               ng-model="password">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+                            <input type="text" name="username" id="username"
+                                   maxlength="15"
+                                   placeholder="Enter Username"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   ng-model="username">
+                        </div>
+
+                        <div>
+                            <label for="contact" class="block text-sm font-semibold text-gray-700 mb-2">Contact</label>
+                            <input type="text" name="contact" id="contact"
+                                   maxlength="11"
+                                   placeholder="Enter Phone Number"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   ng-model="contact">
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="confirm-password" class="block text-sm font-semibold text-gray-700 mb-2">Confirm password</label>
-                        <input type="password" name="confirm-password" id="confirm-password"
-                               maxlength="16"
-                               placeholder="••••••••"
-                               class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
-                               ng-model="confirmPassword">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Your email</label>
+                            <input type="email" name="email" id="email"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
+                                   placeholder="example@gmail.com" required
+                                   ng-model="email">
+                        </div>
+
+                        <div>
+                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                            <input type="password" name="password" id="password"
+                                   maxlength="16"
+                                   placeholder="••••••••"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   ng-model="password">
+                        </div>
                     </div>
 
                     <button type="submit"
@@ -59,7 +92,7 @@
     </div>
 </section>
 
-<footer class="footer sm:footer-horizontal footer-center bg-coffee-light text-white p-4">
+<footer class="footer sm:footer-horizontal footer-center bg-coffee-light text-white p-4 mt-20">
     <aside>
         <p>Copyright © <span>{{ year }}</span> - All right reserved by Coffee Cat</p>
     </aside>

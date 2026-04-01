@@ -1,14 +1,17 @@
 ﻿app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
 
-    // Initial States
+    // Get Footer Date
     $scope.year = new Date().getFullYear();
-    $scope.selectedCategory = 'all';
-    $scope.cart = [];
-    $scope.isCartOpen = false; // Controls the modal state
-
+    
+    // Navigation Function
     $scope.redirect = function (page) {
         window.location.href = "/CoffeeCat/" + page;
     };
+
+    /*** Menu Page Logic ***/
+    $scope.selectedCategory = 'all';
+    $scope.cart = [];
+    $scope.isCartOpen = false; 
 
     // Modal Control Functions
     $scope.openCart = function () {
@@ -130,4 +133,11 @@ app.directive('modalShow', function () {
             });
         }
     };
+
+    $scope.Upsert = function () {
+        var upsertData = CoffeeCatService.UpsertService();
+        upsertData.then(function (returnedData) {
+            alert(returnedData.data);
+        });
+    }
 });
