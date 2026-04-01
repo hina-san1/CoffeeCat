@@ -973,6 +973,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\CoffeeCat\UsersTable.cshtml" />
     <Content Include="Views\CoffeeCat\AdminsTable.cshtml" />
+    <Content Include="Views\CoffeeCat\UserOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -44,5 +44,10 @@ namespace CoffeeCat.Controllers
         {
             return View();
         }
+
+        public ActionResult UserOrder()
+        {
+            return View();
+        }
     }
 }
