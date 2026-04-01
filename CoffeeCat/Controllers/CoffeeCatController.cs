@@ -42,25 +42,45 @@ namespace CoffeeCat.Controllers
             return View();
         }
 
-        public string UpsertUsers()
-        {
-            using (var connect = new OrderingContext())
-            {
-                var userData = new tbl_users_model()
-                {
-                    first_name = "RC",
-                    last_name = "Jimenez",
-                    username = "rcjimenez",
-                    email = "rcjimenez@gmail.com",
-                    password = "rcjimenez123",
-                    contact = "09123456789",
-                    created_at = DateTime.Now,
-                    updated_at = DateTime.Now
-                };
-                connect.tbl_users.Add(userData);
-                connect.SaveChanges();
+        public string ErrorHandling(string eMessage, string eStackTrace, string eInnerException)
+        { 
+            var errorMessage = $"Error has been encountered: {eMessage} | {eStackTrace} | {eInnerException}";
+            return "Unable to process request. Please try again later.";
+        }
 
-                return "Success";
+        public string UpsertUsers(tbl_users_model userInfo)
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var userData = new tbl_users_model()
+                    {
+                        first_name = userInfo.first_name,
+                        last_name = userInfo.last_name,
+                        username = userInfo.username,
+                        email = userInfo.email,
+                        password = userInfo.password,
+                        contact = userInfo.contact,
+                        created_at = DateTime.Now,
+                        updated_at = DateTime.Now
+                    };
+                    connect.tbl_users.Add(userData);
+                    connect.SaveChanges();
+
+                    return "Success";
+                }
+            } 
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += " | INNER: " + ex.InnerException.Message;
+                    if (ex.InnerException.InnerException != null)
+                        msg += " | DEEP: " + ex.InnerException.InnerException.Message;
+                }
+                return msg;
             }
         }
     }

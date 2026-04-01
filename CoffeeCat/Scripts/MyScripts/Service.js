@@ -1,9 +1,10 @@
 ﻿app.service("CoffeeCatService", function ($http) {
 
-    this.UpsertService = function () {
+    this.UpsertUserService = function (userInfo) {
         var response = $http({
             url: "/CoffeeCat/UpsertUsers",
-            method: "post"
+            method: "post",
+            data: userInfo  
         });
         return response;
     }

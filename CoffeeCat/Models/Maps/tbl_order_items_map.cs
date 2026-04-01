@@ -11,8 +11,8 @@ namespace CoffeeCat.Models.Maps
     {
         public tbl_order_items_map()
         {
-            HasKey(i => i.order_id);
-            ToTable("tbl_orders");
+            HasKey(i => i.order_item_id);
+            ToTable("tbl_order_items");
         }
     }
 }

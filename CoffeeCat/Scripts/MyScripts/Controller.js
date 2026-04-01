@@ -1,12 +1,29 @@
 ﻿app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
 
-    // Get Footer Date
+    /*** Get Footer Date ***/
     $scope.year = new Date().getFullYear();
     
-    // Navigation Function
+    /*** Navigation Function ***/
     $scope.redirect = function (page) {
         window.location.href = "/CoffeeCat/" + page;
     };
+
+    /*** Sign Up Page Logic ***/
+    $scope.UpsertUserData = function () {
+        var userInfo = {
+            "first_name": $scope.first_name,
+            "last_name": $scope.last_name, 
+            "username": $scope.username,
+            "email": $scope.email,
+            "password": $scope.password,
+            "contact": $scope.contact
+        }
+
+        var upsertData = CoffeeCatService.UpsertUserService(userInfo);
+        upsertData.then(function (returnedData) {
+            alert(returnedData.data);
+        });
+    }
 
     /*** Menu Page Logic ***/
     $scope.selectedCategory = 'all';
@@ -112,7 +129,7 @@
     ];
 });
 
-// The Bridge Directive (Add this to your app module)
+// The Bridge Directive
 app.directive('modalShow', function () {
     return {
         restrict: 'A',
@@ -125,7 +142,6 @@ app.directive('modalShow', function () {
                 }
             });
 
-            // Sync state if user clicks outside or presses ESC
             element.on('close', function () {
                 scope.$apply(function () {
                     scope[attrs.modalShow] = false;
@@ -133,11 +149,4 @@ app.directive('modalShow', function () {
             });
         }
     };
-
-    $scope.Upsert = function () {
-        var upsertData = CoffeeCatService.UpsertService();
-        upsertData.then(function (returnedData) {
-            alert(returnedData.data);
-        });
-    }
 });
