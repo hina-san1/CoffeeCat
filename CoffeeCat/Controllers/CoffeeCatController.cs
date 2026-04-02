@@ -82,7 +82,6 @@ namespace CoffeeCat.Controllers
             }
             catch (Exception ex)
             {
-                // Capture inner exception details for debugging if needed
                 var errorMsg = ex.InnerException?.InnerException?.Message ?? ex.Message;
                 return Json(new { success = false, message = "Database Error: " + errorMsg });
             }
@@ -116,7 +115,6 @@ namespace CoffeeCat.Controllers
             }
         }
 
-        // Add this method to check session status
         [HttpGet]
         public JsonResult GetSession()
         {
@@ -127,41 +125,11 @@ namespace CoffeeCat.Controllers
             return Json(new { loggedIn = false }, JsonRequestBehavior.AllowGet);
         }
 
-        // Add this method to Logout
         [HttpPost]
         public JsonResult LogoutUser()
         {
             Session.Clear();
             return Json(new { success = true });
-        }
-
-        [HttpGet]
-        public JsonResult GetUserOrders()
-        {
-            try
-            {
-                if (Session["UserID"] == null)
-                {
-                    return Json(new { success = false, message = "Please login first." }, JsonRequestBehavior.AllowGet);
-                }
-
-                int currentUserId = Convert.ToInt32(Session["UserID"]);
-
-                using (var connect = new OrderingContext())
-                {
-                    // Assuming you have a table named tbl_orders linked to users via user_id
-                    var orders = connect.tbl_orders
-                                        .Where(o => o.user_id == currentUserId)
-                                        .OrderByDescending(o => o.created_at)
-                                        .ToList();
-
-                    return Json(new { success = true, data = orders }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-            }
         }
     }
 }

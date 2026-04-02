@@ -51,14 +51,14 @@
                                 <td class="font-mono text-xs font-bold">{{ order.order_id_string }}</td>
                                 <td>{{ order.item_name }}</td>
                                 <td>{{ order.quantity }}</td>
-                                <td class="font-bold">₱{{ order.total_price | number:2 }}</td>
+                                <td class="font-bold">₱{{ order.total_price }}</td>
                                 <td>
                                     <span class="badge font-semibold"
                                           ng-class="{'badge-info': order.status === 'Preparing', 'badge-success': order.status === 'Completed', 'badge-warning': order.status === 'Pending'}">
                                         {{ order.status }}
                                     </span>
                                 </td>
-                                <td>{{ order.created_at | date:'MMM dd, yyyy' }}</td>
+                                <td>{{ order.created_at }}</td>
                             </tr>
                         </tbody>
                     </table>
