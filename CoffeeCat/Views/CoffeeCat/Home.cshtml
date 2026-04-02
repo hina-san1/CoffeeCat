@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="max-w-7xl min-h-screen w-full mx-auto px-8 flex flex-col">
+<div class="max-w-7xl min-h-screen w-full mx-auto px-8 flex flex-col" ng-init="checkSession()">
     <nav class="py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
             <img src="~/Content/assets/logo-coffee-cat.png" alt="logo" class="h-10 w-auto" />
@@ -17,7 +17,15 @@
         </div>
 
         <div class="hidden lg:block">
-            <button class="px-6 py-2 font-semibold text-sm bg-coffee-light text-white border rounded-3xl hover:bg-coffee-dark transition" ng-click="redirect('Login')">Log Out</button>
+            <div ng-if="!isLoggedIn" class="space-x-4">
+                <a class="hover:text-coffee-dark hover:underline underline-offset-2 transition cursor-pointer" ng-click="redirect('Login')">Login</a>
+                <button class="px-6 py-2 font-semibold text-sm bg-coffee-light text-white border rounded-3xl hover:bg-coffee-dark transition" ng-click="redirect('Login')">Sign Up</button>
+            </div>
+
+            <div ng-if="isLoggedIn" class="flex items-center gap-4">
+                <span class="font-bold text-coffee-dark">Hi, {{ currentUser }}!</span>
+                <button class="text-sm hover:underline transition cursor-pointer" ng-click="logout()">Logout</button>
+            </div>
         </div>
 
         <div class="lg:hidden">
@@ -29,29 +37,33 @@
                 </div>
 
                 <ul tabindex="0" class="dropdown-content menu bg-white rounded-box z-[99] w-52 p-2 shadow-lg border border-gray-200 mt-2 text-coffee-light">
-                    <li><a href="#home" class="hover:text-coffee-light">Home</a></li>
-                    <li><a href="#about" class="hover:text-coffee-light">About</a></li>
-                    <li><a href="#contact" class="hover:text-coffee-light">Contact</a></li>
-                    <li><a class="hover:text-coffee-light" ng-click="redirect('Menu')">Menu</a></li>
-                    <li><a class="hover:text-coffee-light" ng-click="redirect('Login')">Logout</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a ng-click="redirect('Menu')">Menu</a></li>
 
+                    <li ng-if="!isLoggedIn"><a ng-click="redirect('Login')">Log In</a></li>
+                    <li class="bg-coffee-light text-white rounded-3xl" ng-if="!isLoggedIn"><a ng-click="redirect('Signup')">Sign Up</a></li>
+
+                    <li ng-if="isLoggedIn" class="disabled"><span class="font-bold">User: {{ currentUser }}</span></li>
+                    <li ng-if="isLoggedIn"><a class="text-red-500" ng-click="logout()">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <section class="flex-1 flex justify-center lg:justify-between items-center
-             motion-translate-y-in-100">
+    <section class="flex-1 flex justify-center lg:justify-between items-center motion-translate-y-in-100">
         <div class="space-y-6 text-center lg:text-left">
-            <h2 class="text-5xl leading-18 md:text-6xl font-bold">Where Coffee Meets<br />
-                <span class="text-coffee-dark">Comfort </span>Warmly</h2>
+            <h2 class="text-5xl leading-18 md:text-6xl font-bold">
+                Where Coffee Meets<br />
+                <span class="text-coffee-dark">Comfort </span>Warmly
+            </h2>
             <p class="leading-relaxed text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br />
-                sed do eiusmod tempor incididunt ut labore et dolore <br />
-                aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                Experience the rich, smooth blend of our premium beans,<br />
+                crafted to perfection for your daily caffeine fix.
             </p>
 
-            <a class="inline-block btn-coffee" ng-click="redirect('Menu')">
+            <a class="inline-block btn-coffee cursor-pointer" ng-click="redirect('Menu')">
                 Order Now
             </a>
         </div>
@@ -68,29 +80,27 @@
     <div class="text-center space-y-4">
         <h2 class="text-5xl lg:text-6xl font-bold">About Us</h2>
         <p class="leading-relaxed text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt<br />
-            ut labore et dolore aliqua. Ut enim ad minim veniam.
+            We take pride in sourcing the finest beans to provide you with an exceptional coffee experience.
         </p>
     </div>
 
     <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center lg:place-items-stretch">
-
         <div class="w-full max-w-80 shadow-lg flex flex-col items-center p-6 gap-4 bg-white rounded-3xl lg:justify-self-start">
             <img src="~/Content/assets/best service.png" alt="best service" class="h-20 w-auto" />
             <h2 class="text-2xl font-bold">Best Service</h2>
-            <p class="text-center text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p class="text-center text-gray-600">Friendly baristas ready to serve your favorite brew.</p>
         </div>
 
         <div class="w-full max-w-80 shadow-lg flex flex-col items-center p-6 gap-4 bg-white rounded-3xl lg:justify-self-center">
             <img src="~/Content/assets/high quality.png" alt="high quality" class="h-20 w-auto" />
             <h2 class="text-2xl font-bold">High Quality</h2>
-            <p class="text-center text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p class="text-center text-gray-600">Strict quality control from bean to cup.</p>
         </div>
 
         <div class="w-full max-w-80 shadow-lg flex flex-col items-center p-6 gap-4 bg-white md:col-span-2 rounded-3xl lg:col-span-1 lg:justify-self-end">
             <img src="~/Content/assets/premium beans.png" alt="premium beans" class="h-20 w-auto" />
             <h2 class="text-2xl font-bold">Premium Beans</h2>
-            <p class="text-center text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p class="text-center text-gray-600">Sustainably sourced beans with rich flavor profiles.</p>
         </div>
     </div>
 </section>
@@ -98,7 +108,6 @@
 <section id="contact" class="max-w-4xl w-full mx-auto py-20 px-8 text-coffee-light
          timeline-view animate-blurred-fade-in animate-range-[entry_10%_contain_30%]">
     <div class="flex flex-col gap-12 items-center">
-
         <div class="text-center space-y-8">
             <h2 class="text-5xl lg:text-6xl font-bold">Get in Touch</h2>
             <p class="text-gray-600 leading-relaxed">
@@ -110,7 +119,7 @@
             <form class="space-y-5">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-                    <input type="text" placeholder="Mary Joy"
+                    <input type="text" placeholder="Your Name"
                            class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required />
                 </div>
 
@@ -126,8 +135,7 @@
                               class="w-full px-4 py-2 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none resize-none font-light" required></textarea>
                 </div>
 
-                <button type="submit"
-                        class="w-full btn-coffee py-6 transition-all duration-300">
+                <button type="submit" class="w-full btn-coffee py-6 transition-all duration-300">
                     Send Message
                 </button>
             </form>
@@ -137,7 +145,6 @@
 
 <footer class="footer sm:footer-horizontal footer-center bg-coffee-light text-white p-4">
     <aside>
-        <p>Copyright © <span>{{ year }}</span> - All right reserved by Coffee Cat</p>
+        <p>Copyright © <span>{{ year }}</span> - All rights reserved by Coffee Cat</p>
     </aside>
 </footer>
-

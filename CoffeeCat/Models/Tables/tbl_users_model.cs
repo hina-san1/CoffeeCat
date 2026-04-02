@@ -11,7 +11,7 @@ namespace CoffeeCat.Models.Tables
         [Key]
         public int user_id { get; set; }
 
-        public string user_role { get; set; }
+        public string user_role { get; set; } = "Customer";
 
         public string first_name { get; set; }
 

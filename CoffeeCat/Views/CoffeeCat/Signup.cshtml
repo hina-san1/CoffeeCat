@@ -10,30 +10,34 @@
             <span>Coffee Cat</span>
         </a>
 
-        <div class="w-full bg-white shadow-lg rounded-3xl p-8 md:p-12 border border-gray-200 mt-10
+        <div class="w-full bg-white shadow-lg rounded-3xl p-8 md:p-12 border border-gray-200
              motion-translate-y-in-100">
             <div class="space-y-6">
                 <h1 class="text-3xl font-bold text-coffee-light text-center">
                     Create an account
                 </h1>
 
-                <form name="signupForm" class="space-y-5" ng-submit="signup()">
+                <form name="signupForm" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="first_name" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
-                            <input type="text" name="first_name" id="first_name"
+                            <input type="text" 
+                                   name="first_name" 
+                                   id="first_name"
                                    maxlength="50"
                                    placeholder="Enter First Name"
-                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
                                    ng-model="first_name">
                         </div>
 
                         <div>
                             <label for="last_name" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
-                            <input type="text" name="last_name" id="last_name"
+                            <input type="text" 
+                                   name="last_name" 
+                                   id="last_name"
                                    maxlength="30"
                                    placeholder="Enter Last Name"
-                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
                                    ng-model="last_name">
                         </div>
                     </div>
@@ -41,19 +45,23 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
-                            <input type="text" name="username" id="username"
+                            <input type="text" 
+                                   name="username" 
+                                   id="username"
                                    maxlength="15"
                                    placeholder="Enter Username"
-                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
                                    ng-model="username">
                         </div>
 
                         <div>
                             <label for="contact" class="block text-sm font-semibold text-gray-700 mb-2">Contact</label>
-                            <input type="text" name="contact" id="contact"
+                            <input type="text" 
+                                   name="contact" 
+                                   id="contact"
                                    maxlength="11"
                                    placeholder="Enter Phone Number"
-                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
                                    ng-model="contact">
                         </div>
                     </div>
@@ -61,18 +69,22 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Your email</label>
-                            <input type="email" name="email" id="email"
+                            <input type="email" 
+                                   name="email" 
+                                   id="email"
                                    class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
-                                   placeholder="example@gmail.com" required
+                                   placeholder="example@gmail.com"
                                    ng-model="email">
                         </div>
 
                         <div>
                             <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                            <input type="password" name="password" id="password"
+                            <input type="password" 
+                                   name="password" 
+                                   id="password"
                                    maxlength="16"
-                                   placeholder="••••••••"
-                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light" required
+                                   placeholder="Create a Password"
+                                   class="w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-coffee-light focus:outline-none font-light"
                                    ng-model="password">
                         </div>
                     </div>
@@ -82,6 +94,10 @@
                             class="w-full btn-coffee py-4 transition-all duration-300">
                         Create an account
                     </button>
+
+                    <p class="text-sm font-light text-red-500 text-center">
+                        *All fields required
+                    </p>
 
                     <p class="text-sm font-light text-gray-500 text-center">
                         Already have an account?

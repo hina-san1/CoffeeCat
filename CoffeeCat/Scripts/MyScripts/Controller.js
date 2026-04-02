@@ -5,25 +5,134 @@
     
     /*** Navigation Function ***/
     $scope.redirect = function (page) {
+        if (page === 'Menu' && !$scope.isLoggedIn) {
+            Swal.fire({
+                title: 'Login Required',
+                text: 'Please register or login to your account to start ordering!',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#967259',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Go to Login',
+                cancelButtonText: 'Stay here'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/CoffeeCat/Login";
+                }
+            });
+            return; 
+        }
+
         window.location.href = "/CoffeeCat/" + page;
     };
 
     /*** Sign Up Page Logic ***/
     $scope.UpsertUserData = function () {
+        if (!$scope.first_name || !$scope.last_name || !$scope.username || !$scope.email || !$scope.password) {
+            Swal.fire({
+                title: 'Incomplete Form',
+                text: 'Please fill in all required fields',
+                icon: 'warning',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
+
         var userInfo = {
             "first_name": $scope.first_name,
-            "last_name": $scope.last_name, 
+            "last_name": $scope.last_name,
             "username": $scope.username,
             "email": $scope.email,
             "password": $scope.password,
             "contact": $scope.contact
-        }
+        };
 
-        var upsertData = CoffeeCatService.UpsertUserService(userInfo);
-        upsertData.then(function (returnedData) {
-            alert(returnedData.data);
+        CoffeeCatService.UpsertUserService(userInfo)
+            .then(function (response) {
+                if (response.data.success) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.data.message,
+                        icon: 'success',
+                        confirmButtonColor: '#967259',
+                        confirmButtonText: 'Login Now'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $scope.redirect("Login");
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Registration Failed',
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            })
+            .catch(function (error) {
+                // General Server Error
+                Swal.fire({
+                    title: 'Server Error',
+                    text: 'Unable to reach the service. Please try again later.',
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+            });
+    };
+
+    /*** Log In Page Logic ***/
+    $scope.LoginUserData = function () {
+        var loginInfo = {
+            email: $scope.login_email,
+            password: $scope.login_password
+        };
+
+        CoffeeCatService.LoginUserService(loginInfo)
+            .then(function (response) {
+                // response.data is the JSON object returned from C#
+                if (response.data.success) {
+                    $scope.redirect("Home");
+                } else {
+                    Swal.fire({
+                        title: 'Login Failed',
+                        text: response.data.message,
+                        icon: 'error',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            })
+            .catch(function (error) {
+                Swal.fire({
+                    title: 'Server Error',
+                    text: 'Could not connect to the server.',
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+            });
+    };
+
+    $scope.currentUser = null;
+    $scope.isLoggedIn = false;
+
+    // Check session on page load
+    $scope.checkSession = function () {
+        CoffeeCatService.getSession().then(function (response) {
+            if (response.data.loggedIn) {
+                $scope.isLoggedIn = true;
+                $scope.currentUser = response.data.username;
+            }
         });
-    }
+    };
+    $scope.checkSession(); // Run immediately
+
+    $scope.logout = function () {
+        CoffeeCatService.logoutService().then(function () {
+            $scope.isLoggedIn = false;
+            $scope.currentUser = null;
+            $scope.redirect("Login");
+        });
+    };
 
     /*** Menu Page Logic ***/
     $scope.selectedCategory = 'all';
@@ -105,7 +214,7 @@
             title: 'Checkout Completed!',
             text: 'Thank you for ordering at Coffee Cat!',
             icon: 'success',
-            confirmButtonColor: '#6F4E37',
+            confirmButtonColor: '#967259',
             confirmButtonText: 'Great!'
         }).then(() => {
             $scope.cart = [];
@@ -148,5 +257,30 @@ app.directive('modalShow', function () {
                 });
             });
         }
+    };
+
+    /*** User Orders Logic ***/
+    $scope.userOrders = [];
+
+    $scope.loadOrders = function () {
+        CoffeeCatService.getUserOrdersService().then(function (response) {
+            if (response.data.success) {
+                $scope.userOrders = response.data.data;
+            } else {
+                console.log("Error fetching orders:", response.data.message);
+            }
+        });
+    };
+
+    // Update your checkSession to load orders if logged in
+    $scope.checkSession = function () {
+        CoffeeCatService.getSession().then(function (response) {
+            if (response.data.loggedIn) {
+                $scope.isLoggedIn = true;
+                $scope.currentUser = response.data.username;
+                // Load orders specifically for the UserOrder page
+                $scope.loadOrders();
+            }
+        });
     };
 });
