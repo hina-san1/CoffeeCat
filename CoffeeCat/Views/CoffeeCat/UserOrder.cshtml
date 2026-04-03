@@ -48,8 +48,8 @@
                         <tbody>
                             <tr ng-repeat="order in userOrders" class="hover:bg-gray-50 transition-colors">
                                 <th>{{ $index + 1 }}</th>
-                                <td class="font-mono text-xs font-bold">{{ order.order_id_string }}</td>
-                                <td>{{ order.item_name }}</td>
+                                <td class="text-xs font-bold">{{ order.order_id }}</td>
+                                <td>{{ order.drink_name }}</td>
                                 <td>{{ order.quantity }}</td>
                                 <td class="font-bold">₱{{ order.total_price }}</td>
                                 <td>
