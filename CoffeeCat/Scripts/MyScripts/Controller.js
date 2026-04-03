@@ -2,7 +2,7 @@
 
     /*** Get Footer Date ***/
     $scope.year = new Date().getFullYear();
-    
+
     /*** Navigation Function ***/
     $scope.redirect = function (page) {
         if (page === 'Menu' && !$scope.isLoggedIn) {
@@ -20,7 +20,7 @@
                     window.location.href = "/CoffeeCat/Login";
                 }
             });
-            return; 
+            return;
         }
 
         window.location.href = "/CoffeeCat/" + page;
@@ -71,7 +71,6 @@
                 }
             })
             .catch(function (error) {
-                // General Server Error
                 Swal.fire({
                     title: 'Server Error',
                     text: 'Unable to reach the service. Please try again later.',
@@ -90,7 +89,6 @@
 
         CoffeeCatService.LoginUserService(loginInfo)
             .then(function (response) {
-                // response.data is the JSON object returned from C#
                 if (response.data.success) {
                     $scope.redirect("Home");
                 } else {
@@ -115,17 +113,6 @@
     $scope.currentUser = null;
     $scope.isLoggedIn = false;
 
-    // Check session on page load
-    $scope.checkSession = function () {
-        CoffeeCatService.getSession().then(function (response) {
-            if (response.data.loggedIn) {
-                $scope.isLoggedIn = true;
-                $scope.currentUser = response.data.username;
-            }
-        });
-    };
-    $scope.checkSession(); // Run immediately
-
     $scope.logout = function () {
         CoffeeCatService.logoutService().then(function () {
             $scope.isLoggedIn = false;
@@ -137,9 +124,8 @@
     /*** Menu Page Logic ***/
     $scope.selectedCategory = 'all';
     $scope.cart = [];
-    $scope.isCartOpen = false; 
+    $scope.isCartOpen = false;
 
-    // Modal Control Functions
     $scope.openCart = function () {
         $scope.isCartOpen = true;
     };
@@ -148,7 +134,6 @@
         $scope.isCartOpen = false;
     };
 
-    // Category Logic
     $scope.setCategory = function (category) {
         $scope.selectedCategory = category;
     };
@@ -158,7 +143,6 @@
         return item.category === $scope.selectedCategory;
     };
 
-    // Cart Functions
     $scope.addToCart = function (item) {
         var existingItem = $scope.cart.find(function (cartItem) {
             return cartItem.id === item.id;
@@ -187,7 +171,6 @@
         }
     };
 
-    // Calculations
     $scope.getSubtotal = function () {
         var subtotal = 0;
         angular.forEach($scope.cart, function (item) {
@@ -204,23 +187,61 @@
         return $scope.getSubtotal() + $scope.getTax();
     };
 
-    // Checkout Logic
     $scope.checkout = function () {
         if ($scope.cart.length === 0) return;
 
-        $scope.isCartOpen = false;
+        var orderData = {
+            "subtotal": $scope.getSubtotal(),
+            "tax": $scope.getTax(),
+            "total": $scope.getTotal(),
+            "order_items": $scope.cart.map(function (item) {
+                return {
+                    "drink_id": item.id,
+                    "quantity": item.quantity
+                };
+            })
+        };
 
-        Swal.fire({
-            title: 'Checkout Completed!',
-            text: 'Thank you for ordering at Coffee Cat!',
-            icon: 'success',
-            confirmButtonColor: '#967259',
-            confirmButtonText: 'Great!'
-        }).then(() => {
-            $scope.cart = [];
-            $scope.$apply(); 
+        CoffeeCatService.AddOrderService(orderData).then(function (response) {
+            if (response.data.success) {
+                $scope.isCartOpen = false;
+                $scope.cart = [];
+                Swal.fire({
+                    title: 'Order Placed!',
+                    text: 'Your caffeine is on the way!',
+                    icon: 'success',
+                    confirmButtonColor: '#967259'
+                }).then(() => {
+                    $scope.redirect('UserOrder');
+                });
+            } else {
+                Swal.fire('Error', response.data.message, 'error');
+            }
         });
     };
+
+    /*** User Orders Logic ***/
+    $scope.userOrders = [];
+
+    $scope.loadOrders = function () {
+        CoffeeCatService.GetUserOrdersService().then(function (response) {
+            if (response.data.success) {
+                $scope.userOrders = response.data.data;
+            }
+        });
+    };
+
+    // Check session on page load
+    $scope.checkSession = function () {
+        CoffeeCatService.getSession().then(function (response) {
+            if (response.data.loggedIn) {
+                $scope.isLoggedIn = true;
+                $scope.currentUser = response.data.username;
+                $scope.loadOrders(); // Load orders if logged in
+            }
+        });
+    };
+    $scope.checkSession(); // Run immediately
 
     // Menu Data
     $scope.LoremIpsum = "Experience the rich, smooth blend of our premium beans, crafted to perfection for your daily caffeine fix.";
@@ -236,9 +257,10 @@
         { id: 9, name: 'Matcha Latte', price: 150.00, category: 'matcha', image: '/Content/assets/matcha latte.png', description: $scope.LoremIpsum, },
         { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.LoremIpsum }
     ];
-});
 
-// The Bridge Directive
+}); // This is the end of the CoffeeCatController
+
+// Directives stay outside the controller
 app.directive('modalShow', function () {
     return {
         restrict: 'A',
@@ -257,30 +279,5 @@ app.directive('modalShow', function () {
                 });
             });
         }
-    };
-
-    /*** User Orders Logic ***/
-    $scope.userOrders = [];
-
-    $scope.loadOrders = function () {
-        CoffeeCatService.getUserOrdersService().then(function (response) {
-            if (response.data.success) {
-                $scope.userOrders = response.data.data;
-            } else {
-                console.log("Error fetching orders:", response.data.message);
-            }
-        });
-    };
-
-    // Update your checkSession to load orders if logged in
-    $scope.checkSession = function () {
-        CoffeeCatService.getSession().then(function (response) {
-            if (response.data.loggedIn) {
-                $scope.isLoggedIn = true;
-                $scope.currentUser = response.data.username;
-                // Load orders specifically for the UserOrder page
-                $scope.loadOrders();
-            }
-        });
     };
 });

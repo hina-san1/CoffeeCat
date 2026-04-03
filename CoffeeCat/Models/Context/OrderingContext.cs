@@ -25,6 +25,8 @@ namespace CoffeeCat.Models.Context
 
         public virtual DbSet<tbl_drinks_model> tbl_drinks { get; set; }
 
+        public virtual DbSet<tbl_statuses_model> tbl_statuses { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,6 +34,7 @@ namespace CoffeeCat.Models.Context
             modelBuilder.Configurations.Add(new tbl_orders_map());
             modelBuilder.Configurations.Add(new tbl_order_items_map());
             modelBuilder.Configurations.Add(new tbl_drinks_map());
+            modelBuilder.Configurations.Add(new tbl_statuses_map());
         }
     }
 }

@@ -8,7 +8,6 @@ namespace CoffeeCat.Models.Tables
 {
     public class tbl_orders_model
     {
-        [Key]
         public int order_id { get; set; }
 
         public int user_id { get; set; }
@@ -19,7 +18,7 @@ namespace CoffeeCat.Models.Tables
 
         public decimal total { get; set; }
 
-        public string order_status { get; set; }
+        public int order_status_id { get; set; }
 
         public DateTime created_at { get; set; }
 

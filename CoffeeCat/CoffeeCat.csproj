@@ -153,10 +153,12 @@
     <Compile Include="Models\Maps\tbl_drinks_map.cs" />
     <Compile Include="Models\Maps\tbl_orders_map.cs" />
     <Compile Include="Models\Maps\tbl_order_items_map.cs" />
+    <Compile Include="Models\Maps\tbl_statuses_map.cs" />
     <Compile Include="Models\Maps\tbl_users_map.cs" />
     <Compile Include="Models\Tables\tbl_drinks_,model.cs" />
     <Compile Include="Models\Tables\tbl_orders_model.cs" />
     <Compile Include="Models\Tables\tbl_order_items_model.cs" />
+    <Compile Include="Models\Tables\tbl_statuses_model.cs" />
     <Compile Include="Models\Tables\tbl_users_model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

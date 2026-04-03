@@ -3416,6 +3416,9 @@
   .bg-blue-100 {
     background-color: var(--color-blue-100);
   }
+  .bg-coffee-dark {
+    background-color: var(--color-coffee-dark);
+  }
   .bg-coffee-light {
     background-color: var(--color-coffee-light);
   }

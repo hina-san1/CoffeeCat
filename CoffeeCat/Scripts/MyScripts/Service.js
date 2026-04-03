@@ -24,4 +24,12 @@
     this.logoutService = function () {
         return $http.post("/CoffeeCat/LogoutUser");
     };
+
+    this.AddOrderService = function (orderInfo) {
+        return $http.post("/CoffeeCat/AddOrder", orderInfo);
+    };
+
+    this.GetUserOrdersService = function () {
+        return $http.get("/CoffeeCat/GetUserOrders");
+    };
 });

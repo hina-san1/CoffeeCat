@@ -38,27 +38,29 @@
                             <tr class="text-coffee-dark">
                                 <th>#</th>
                                 <th>Order ID</th>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Total</th>
+                                <th>Items Ordered</th>
+                                <th>Total Amount</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Date Placed</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="order in userOrders" class="hover:bg-gray-50 transition-colors">
                                 <th>{{ $index + 1 }}</th>
-                                <td class="text-xs font-bold">{{ order.order_id }}</td>
-                                <td>{{ order.drink_name }}</td>
-                                <td>{{ order.quantity }}</td>
-                                <td class="font-bold">₱{{ order.total_price }}</td>
+                                <td class="text-xs font-bold text-gray-400">#{{ order.order_id }}</td>
+                                <td class="font-medium">{{ order.drink_name }}</td>
+                                <td class="font-bold text-coffee-dark">₱{{ order.total_price.toFixed(2) }}</td>
                                 <td>
-                                    <span class="badge font-semibold"
-                                          ng-class="{'badge-info': order.status === 'Preparing', 'badge-success': order.status === 'Completed', 'badge-warning': order.status === 'Pending'}">
+                                    <span class="badge font-semibold py-3 px-4"
+                                          ng-class="{
+                                            'badge-warning': order.status === 'Pending',
+                                            'badge-info': order.status === 'Processing',
+                                            'badge-success': order.status === 'Completed'
+                                          }">
                                         {{ order.status }}
                                     </span>
                                 </td>
-                                <td>{{ order.created_at }}</td>
+                                <td class="text-gray-500 text-sm">{{ order.created_at }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -71,7 +73,7 @@
                         </svg>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-800">No recent orders</h2>
-                    <button class="btn-coffee px-10" ng-click="redirect('Menu')">Go to Menu</button>
+                    <button class="btn bg-coffee-dark text-white px-10 hover:bg-coffee-medium transition" ng-click="redirect('Menu')">Go to Menu</button>
                 </div>
             </div>
         </div>
@@ -83,14 +85,7 @@
             <ul class="menu w-full grow bg-coffee-light">
                 <li class="text-white">
                     <button ng-click="redirect('Home')">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 24 24"
-                             stroke-linejoin="round"
-                             stroke-linecap="round"
-                             stroke-width="2"
-                             fill="none"
-                             stroke="currentColor"
-                             class="my-1.5 inline-block size-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4">
                             <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
                             <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         </svg>
@@ -100,13 +95,7 @@
 
                 <li class="text-white">
                     <button ng-click="redirect('Menu')">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white"
-                             aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg"
-                             width="24"
-                             height="24"
-                             fill="none"
-                             viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10" />
                         </svg>
                         <span class="is-drawer-close:hidden">Menu</span>
@@ -115,14 +104,7 @@
 
                 <li class="text-white">
                     <button ng-click="redirect('UserOrder')">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 24 24"
-                             fill="none"
-                             stroke="currentColor"
-                             stroke-width="2"
-                             stroke-linecap="round"
-                             stroke-linejoin="round"
-                             class="my-1.5 inline-block size-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="my-1.5 inline-block size-4">
                             <path d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z" />
                         </svg>
                         <span class="is-drawer-close:hidden">Orders</span>
