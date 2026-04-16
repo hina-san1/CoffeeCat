@@ -1,1 +1,1 @@
-﻿let app = angular.module("CoffeeCat", []);
+﻿let app = angular.module("CoffeeCat", ['chart.js']);

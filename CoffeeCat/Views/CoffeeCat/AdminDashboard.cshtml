@@ -24,7 +24,7 @@
         </nav>
 
         <div class="p-8 flex-1 overflow-y-auto bg-gray-50">
-            <div class="space-y-4 h-full flex flex-col">
+            <div class="space-y-8 h-full flex flex-col">
                 <!-- Card Stats -->
                 <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 shadow-md rounded-xl border-gray-100 space-y-2">
@@ -84,6 +84,28 @@
                     </div>
                 </div>
 
+                <!-- Charts -->
+                <div class="space-y-4">
+                    <div>
+                        <h2 class="font-semibold"> Analytics</h2>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2">
+                        <div>
+                            <canvas id="bar" class="chart chart-bar"
+                                    chart-data="data" chart-labels="labels">
+                                chart-series="series"
+                            </canvas>
+                        </div>
+
+                        <div>
+                            <canvas id="pie" class="chart chart-pie"
+                                    chart-data="data" chart-labels="labels" chart-options="options">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+               
             </div>
         </div>
     </div>
