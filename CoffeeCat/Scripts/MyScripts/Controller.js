@@ -90,7 +90,13 @@
         CoffeeCatService.LoginUserService(loginInfo)
             .then(function (response) {
                 if (response.data.success) {
-                    $scope.redirect("Home");
+                    var userRole = (response.data.role || "").toLowerCase();
+
+                    if (userRole === "admin") {
+                        window.location.href = "/CoffeeCat/AdminDashboard";
+                    } else {
+                        window.location.href = "/CoffeeCat/Home";
+                    }
                 } else {
                     Swal.fire({
                         title: 'Login Failed',

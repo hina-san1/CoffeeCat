@@ -42,6 +42,16 @@ namespace CoffeeCat.Controllers
             return View();
         }
 
+        public ActionResult AdminOrders()
+        {
+            return View();
+        }
+
+        public ActionResult AdminUsers()
+        {
+            return View();
+        }
+
         public string ErrorHandling(string eMessage, string eStackTrace, string eInnerException)
         {
             var errorMessage = $"Error has been encountered: {eMessage} | {eStackTrace} | {eInnerException}";
@@ -100,11 +110,17 @@ namespace CoffeeCat.Controllers
 
                     if (user != null)
                     {
-                        // Store the username in the Session
                         Session["Username"] = user.username;
                         Session["UserID"] = user.user_id;
+                        Session["UserRole"] = user.user_role;
 
-                        return Json(new { success = true, message = "Login Successful" });
+                        // FORCE the role into the JSON response
+                        return Json(new
+                        {
+                            success = true,
+                            message = "Login Successful",
+                            role = user.user_role // Make sure this is exactly "Admin" in the DB
+                        });
                     }
                     return Json(new { success = false, message = "Invalid email or password." });
                 }
@@ -120,7 +136,12 @@ namespace CoffeeCat.Controllers
         {
             if (Session["Username"] != null)
             {
-                return Json(new { loggedIn = true, username = Session["Username"].ToString() }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    loggedIn = true,
+                    username = Session["Username"].ToString(),
+                    role = Session["UserRole"]?.ToString() // Include role here too
+                }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { loggedIn = false }, JsonRequestBehavior.AllowGet);
         }
