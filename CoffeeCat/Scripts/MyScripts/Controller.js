@@ -243,11 +243,11 @@
             if (response.data.loggedIn) {
                 $scope.isLoggedIn = true;
                 $scope.currentUser = response.data.username;
-                $scope.loadOrders(); // Load orders if logged in
+                $scope.loadOrders(); 
             }
         });
     };
-    $scope.checkSession(); // Run immediately
+    $scope.checkSession();
 
     // Menu Data
     $scope.LoremIpsum = "Experience the rich, smooth blend of our premium beans, crafted to perfection for your daily caffeine fix.";
@@ -264,7 +264,36 @@
         { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.LoremIpsum }
     ];
 
-}); // This is the end of the CoffeeCatController
+    /*** Admin Dashboard Logic ***/
+    $scope.dashboardStats = {};
+
+    $scope.getStats = function () {
+        CoffeeCatService.GetDashboardStatsService().then(function (response) {
+            if (response.data.success) {
+                $scope.dashboardStats = response.data.data;
+            }
+        });
+    };
+
+    // Call this inside your existing checkSession if role === 'admin'
+    $scope.getStats();
+
+    // Update your existing checkSession to load stats if user is Admin
+    $scope.checkSession = function () {
+        CoffeeCatService.getSession().then(function (response) {
+            if (response.data.loggedIn) {
+
+                // If the role is admin, load the stats
+                if (response.data.role && response.data.role.toLowerCase() === 'admin') {
+                    $scope.loadDashboardStats();
+                } else {
+                    $scope.loadOrders();
+                }
+            }
+        });
+    };
+
+}); 
 
 // Directives stay outside the controller
 app.directive('modalShow', function () {

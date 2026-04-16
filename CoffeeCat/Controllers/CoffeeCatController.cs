@@ -220,7 +220,6 @@ namespace CoffeeCat.Controllers
                         .Select(o => new
                         {
                             order_id = o.order_id,
-                            // This joins the drink names and quantities into one string
                             items_summary = connect.tbl_order_items
                                 .Where(oi => oi.order_id == o.order_id)
                                 .Join(connect.tbl_drinks, oi => oi.drink_id, d => d.drink_id, (oi, d) => new { d.drink_name, oi.quantity })
@@ -241,6 +240,34 @@ namespace CoffeeCat.Controllers
                     });
 
                     return Json(new { success = true, data = result }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetDashboardStats()
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        data = new
+                        {
+                            totalUsers = connect.tbl_users.Count(),
+                            totalOrders = connect.tbl_orders.Count(),
+                            // Matches status_id 1 in your table
+                            pendingOrders = connect.tbl_orders.Count(o => o.order_status_id == 1),
+                            // Matches status_id 3 in your table
+                            completedOrders = connect.tbl_orders.Count(o => o.order_status_id == 3)
+                        }
+                    }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
