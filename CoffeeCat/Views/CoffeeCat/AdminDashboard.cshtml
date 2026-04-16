@@ -16,6 +16,11 @@
                 </label>
                 <div class="px-4 text-xl font-bold">Dashboard</div>
             </div>
+
+            <div ng-if="isLoggedIn" class="flex items-center gap-4">
+                <span class="font-bold text-coffee-dark hidden sm:inline">Hi, {{ currentUser }}!</span>
+                <button class="text-sm hover:underline transition cursor-pointer text-red-600" ng-click="logout()">Logout</button>
+            </div>
         </nav>
 
         <div class="p-8 flex-1 overflow-y-auto bg-gray-50">
