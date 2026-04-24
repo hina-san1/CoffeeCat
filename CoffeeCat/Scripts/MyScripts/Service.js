@@ -43,4 +43,8 @@
     this.GetAllCustomersService = function () {
         return $http.get("/CoffeeCat/GetAllCustomers");
     };
+
+    this.GetRevenueDataService = function () {
+        return $http.get("/CoffeeCat/GetRevenueData");
+    };
 });

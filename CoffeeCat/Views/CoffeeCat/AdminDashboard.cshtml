@@ -86,23 +86,31 @@
 
                 <!-- Charts -->
                 <div class="space-y-4">
-                    <div>
-                        <h2 class="font-semibold"> Analytics</h2>
-                    </div>
-
                     <div class="grid lg:grid-cols-2">
-                        <div>
-                            <canvas id="bar" class="chart chart-bar"
-                                    chart-data="data" chart-labels="labels">
-                                chart-series="series"
-                            </canvas>
+                        <!-- Bar Chart -->
+                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 lg:col-span-2">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-bold text-gray-800">Monthly Revenue</h3>
+                                <p class="text-xs text-gray-400 font-medium">Data based on completed orders for {{ year }}</p>
+                            </div>
+
+                            <div class="relative h-80 w-full">
+                                <div ng-if="data.length === 0" class="absolute inset-0 flex items-center justify-center">
+                                    <span class="loading loading-spinner loading-lg text-coffee-light"></span>
+                                </div>
+
+                                <canvas id="bar" class="chart chart-bar"
+                                        chart-data="data"
+                                        chart-labels="labels"
+                                        chart-series="series"
+                                        chart-options="barOptions"
+                                        chart-colors="barColors">
+                                </canvas>
+                            </div>
                         </div>
 
-                        <div>
-                            <canvas id="pie" class="chart chart-pie"
-                                    chart-data="data" chart-labels="labels" chart-options="options">
-                            </canvas>
-                        </div>
+                        <!-- Pie Chart -->
+                        
                     </div>
                 </div>
                

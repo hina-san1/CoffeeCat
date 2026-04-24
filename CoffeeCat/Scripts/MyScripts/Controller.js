@@ -267,7 +267,8 @@
                     // Admin
                     $scope.loadAdminOrders(); 
                     $scope.loadCustomers();   
-                    $scope.getStats();        
+                    $scope.getStats();
+                    $scope.loadRevenueChart();
                 } else {
                     // Customer 
                     $scope.loadOrders();      
@@ -295,17 +296,52 @@
     };
 
     // Bar Chart
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    $scope.series = ['Series A', 'Series B'];
+    $scope.labels = [];
+    $scope.data = []; 
+    $scope.series = ['Monthly Revenue'];
 
-    $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
+    $scope.barColors = [{
+        backgroundColor: '#8B5E3C', 
+        borderColor: 'transparent',
+        hoverBackgroundColor: '#6F4E37' 
+    }];
 
+    $scope.barOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    callback: function (value) { return '₱' + value.toLocaleString(); },
+                    fontColor: '#9ca3af'
+                },
+                gridLines: { color: '#f3f4f6', drawBorder: false }
+            }],
+            xAxes: [{
+                ticks: { fontColor: '#4b5563', fontStyle: '600' },
+                gridLines: { display: false }
+            }]
+        },
+        tooltips: {
+            callbacks: {
+                label: function (tooltipItem) {
+                    return "Total: ₱" + tooltipItem.yLabel.toLocaleString();
+                }
+            }
+        }
+    };
+
+    $scope.loadRevenueChart = function () {
+        CoffeeCatService.GetRevenueDataService().then(function (response) {
+            if (response.data.success) {
+                $scope.labels = response.data.labels;
+                $scope.data = [response.data.data];
+            }
+        });
+    };
     // Pie Chart
-    $scope.labels_pie = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-    $scope.data_pie = [300, 500, 100];
+    
 
     /*** Admin Orders Logic ***/
     $scope.allOrders = [];
