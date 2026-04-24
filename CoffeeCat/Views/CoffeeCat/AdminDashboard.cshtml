@@ -4,7 +4,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content h-screen overflow-hidden flex flex-col">
+    <div class="drawer-content overflow-hidden flex flex-col">
         <nav class="navbar w-full bg-base-300 flex justify-between items-center px-4">
             <div class="flex items-center">
                 <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
@@ -23,8 +23,8 @@
             </div>
         </nav>
 
-        <div class="p-8 flex-1 overflow-y-auto bg-gray-50">
-            <div class="space-y-8 h-full flex flex-col">
+        <div class="p-8 overflow-y-auto bg-gray-50">
+            <div class="space-y-6 h-full flex flex-col">
                 <!-- Card Stats -->
                 <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 shadow-md rounded-xl border-gray-100 space-y-2">
@@ -86,31 +86,35 @@
 
                 <!-- Charts -->
                 <div class="space-y-4">
-                    <div class="grid lg:grid-cols-2">
+                    <div class="grid lg:grid-cols-5 gap-6">
                         <!-- Bar Chart -->
-                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 lg:col-span-2">
+                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 lg:col-span-3">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-bold text-gray-800">Monthly Revenue</h3>
                                 <p class="text-xs text-gray-400 font-medium">Data based on completed orders for {{ year }}</p>
                             </div>
 
-                            <div class="relative h-80 w-full">
-                                <div ng-if="data.length === 0" class="absolute inset-0 flex items-center justify-center">
-                                    <span class="loading loading-spinner loading-lg text-coffee-light"></span>
-                                </div>
-
+                            <div class="relative w-full">
                                 <canvas id="bar" class="chart chart-bar"
-                                        chart-data="data"
-                                        chart-labels="labels"
-                                        chart-series="series"
-                                        chart-options="barOptions"
-                                        chart-colors="barColors">
+                                        chart-data="data" chart-labels="labels">
+                                    chart-series="series"
                                 </canvas>
                             </div>
                         </div>
 
                         <!-- Pie Chart -->
-                        
+                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 lg:col-span-2">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-bold text-gray-800">Popular Drinks</h3>
+                                <p class="text-xs text-gray-400 font-medium">Data based on common drinks order for {{ year }}</p>
+                            </div>
+
+                            <div class="relative w-full">
+                                <canvas id="pie" class="chart chart-pie"
+                                        chart-data="data" chart-labels="labels" chart-options="options">
+                                </canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                

@@ -296,52 +296,18 @@
     };
 
     // Bar Chart
-    $scope.labels = [];
-    $scope.data = []; 
-    $scope.series = ['Monthly Revenue'];
+    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    $scope.series = ['Series A', 'Series B'];
 
-    $scope.barColors = [{
-        backgroundColor: '#8B5E3C', 
-        borderColor: 'transparent',
-        hoverBackgroundColor: '#6F4E37' 
-    }];
-
-    $scope.barOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    callback: function (value) { return '₱' + value.toLocaleString(); },
-                    fontColor: '#9ca3af'
-                },
-                gridLines: { color: '#f3f4f6', drawBorder: false }
-            }],
-            xAxes: [{
-                ticks: { fontColor: '#4b5563', fontStyle: '600' },
-                gridLines: { display: false }
-            }]
-        },
-        tooltips: {
-            callbacks: {
-                label: function (tooltipItem) {
-                    return "Total: ₱" + tooltipItem.yLabel.toLocaleString();
-                }
-            }
-        }
-    };
-
-    $scope.loadRevenueChart = function () {
-        CoffeeCatService.GetRevenueDataService().then(function (response) {
-            if (response.data.success) {
-                $scope.labels = response.data.labels;
-                $scope.data = [response.data.data];
-            }
-        });
-    };
+    $scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+    ];
     // Pie Chart
-    
+    $scope.data = [
+        [65, 59, 90, 81, 56, 55, 40],
+        [28, 48, 40, 19, 96, 27, 100]
+    ];
 
     /*** Admin Orders Logic ***/
     $scope.allOrders = [];
