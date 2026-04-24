@@ -305,6 +305,34 @@
     // Pie Chart
     $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
     $scope.data = [300, 500, 100];
+
+    /*** Admin Users Logic ***/
+    $scope.allCustomers = [];
+
+    $scope.loadCustomers = function () {
+        CoffeeCatService.GetAllCustomersService().then(function (response) {
+            if (response.data.success) {
+                $scope.allCustomers = response.data.data;
+            }
+        });
+    };
+
+    // Update your checkSession to include this:
+    $scope.checkSession = function () {
+        CoffeeCatService.getSession().then(function (response) {
+            if (response.data.loggedIn) {
+                $scope.isLoggedIn = true;
+                $scope.currentUser = response.data.username;
+
+                if (response.data.role && response.data.role.toLowerCase() === 'admin') {
+                    $scope.loadCustomers(); 
+                    $scope.getStats();      
+                } else {
+                    $scope.loadOrders();
+                }
+            }
+        });
+    };
 }); 
 
 // Directives stay outside the controller

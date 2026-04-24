@@ -275,5 +275,45 @@ namespace CoffeeCat.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpGet]
+        public JsonResult GetAllCustomers()
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var customers = connect.tbl_users
+                        .Where(u => u.user_role == "Customer")
+                        .OrderByDescending(u => u.created_at)
+                        .Select(u => new
+                        {
+                            u.user_id,
+                            u.first_name,
+                            u.last_name,
+                            u.username,
+                            u.email,
+                            u.contact,
+                            created_at = u.created_at
+                        }).ToList();
+
+                    var result = customers.Select(u => new {
+                        u.user_id,
+                        u.first_name,
+                        u.last_name,
+                        u.username,
+                        u.email,
+                        u.contact,
+                        created_at = u.created_at.ToString("MMM dd, yyyy")
+                    });
+
+                    return Json(new { success = true, data = result }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

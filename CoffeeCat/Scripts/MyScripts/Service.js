@@ -36,4 +36,8 @@
     this.GetDashboardStatsService = function () {
         return $http.get("/CoffeeCat/GetDashboardStats");
     };
+
+    this.GetAllCustomersService = function () {
+        return $http.get("/CoffeeCat/GetAllCustomers");
+    };
 });
