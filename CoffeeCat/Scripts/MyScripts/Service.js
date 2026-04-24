@@ -8,15 +8,15 @@
         return $http.post("/CoffeeCat/LoginUser", loginInfo);
     };
 
-    this.getUserService = function () {
+    this.GetUserService = function () {
         return $http.get("CoffeeCat/GetUsers");
     }
 
-    this.getSession = function () {
+    this.GetSession = function () {
         return $http.get("/CoffeeCat/GetSession");
     };
 
-    this.logoutService = function () {
+    this.LogoutService = function () {
         return $http.post("/CoffeeCat/LogoutUser");
     };
 
@@ -42,9 +42,5 @@
 
     this.GetAllCustomersService = function () {
         return $http.get("/CoffeeCat/GetAllCustomers");
-    };
-
-    this.GetRevenueDataService = function () {
-        return $http.get("/CoffeeCat/GetRevenueData");
     };
 });

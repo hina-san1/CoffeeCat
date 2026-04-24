@@ -387,46 +387,5 @@ namespace CoffeeCat.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
-        [HttpGet]
-        public JsonResult GetRevenueData()
-        {
-            try
-            {
-                using (var connect = new OrderingContext())
-                {
-                    var currentYear = DateTime.Now.Year;
-
-                    var revenueByMonth = connect.tbl_orders
-                        .Where(o => o.created_at.Year == currentYear && o.order_status_id == 3) 
-                        .GroupBy(o => o.created_at.Month)
-                        .Select(g => new
-                        {
-                            Month = g.Key,
-                            Total = g.Sum(o => o.total)
-                        })
-                        .ToList();
-
-                    var months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
-                    var data = new decimal[12];
-
-                    foreach (var item in revenueByMonth)
-                    {
-                        data[item.Month - 1] = item.Total;
-                    }
-
-                    return Json(new
-                    {
-                        success = true,
-                        labels = months,
-                        data = data
-                    }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
     }
 }

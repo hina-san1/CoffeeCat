@@ -27,7 +27,7 @@
     };
 
     /*** Sign Up Page Logic ***/
-    $scope.UpsertUserData = function () {
+    $scope.upsertUserData = function () {
         if (!$scope.first_name || !$scope.last_name || !$scope.username || !$scope.email || !$scope.password) {
             Swal.fire({
                 title: 'Incomplete Form',
@@ -81,7 +81,7 @@
     };
 
     /*** Log In Page Logic ***/
-    $scope.LoginUserData = function () {
+    $scope.loginUserData = function () {
         var loginInfo = {
             email: $scope.login_email,
             password: $scope.login_password
@@ -120,7 +120,7 @@
     $scope.isLoggedIn = false;
 
     $scope.logout = function () {
-        CoffeeCatService.logoutService().then(function () {
+        CoffeeCatService.LogoutService().then(function () {
             $scope.isLoggedIn = false;
             $scope.currentUser = null;
             $scope.redirect("Home");
@@ -256,7 +256,7 @@
 
     // Session Check
     $scope.checkSession = function () {
-        CoffeeCatService.getSession().then(function (response) {
+        CoffeeCatService.GetSession().then(function (response) {
             if (response.data.loggedIn) {
                 $scope.isLoggedIn = true;
                 $scope.currentUser = response.data.username;
@@ -264,13 +264,10 @@
                 var role = (response.data.role || "").toLowerCase();
 
                 if (role === 'admin') {
-                    // Admin
                     $scope.loadAdminOrders(); 
                     $scope.loadCustomers();   
                     $scope.getStats();
-                    $scope.loadRevenueChart();
                 } else {
-                    // Customer 
                     $scope.loadOrders();      
                 }
             } else {
