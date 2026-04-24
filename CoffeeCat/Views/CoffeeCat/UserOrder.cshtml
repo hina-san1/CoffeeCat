@@ -7,14 +7,14 @@
     <div class="drawer-content h-screen overflow-hidden flex flex-col">
         <nav class="navbar w-full bg-base-300 flex justify-between items-center px-4">
             <div class="flex items-center">
-                <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
+                <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost lg:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4">
                         <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
                         <path d="M9 4v16"></path>
                         <path d="M14 10l2 2l-2 2"></path>
                     </svg>
                 </label>
-                <div class="px-4 text-xl font-bold">Coffee Cat</div>
+                <div class="px-4 text-xl font-bold text-coffee-dark">Coffee Cat</div>
             </div>
 
             <div class="flex items-center gap-4">
@@ -35,8 +35,8 @@
                 <div ng-if="userOrders.length > 0" class="overflow-x-auto bg-white w-full rounded-2xl shadow-sm border border-gray-100">
                     <table class="table w-full">
                         <thead>
-                            <tr class="text-coffee-dark">
-                                <th>#</th>
+                            <tr class="text-coffee-dark uppercase text-xs">
+                                <th class="py-4">#</th>
                                 <th>Order ID</th>
                                 <th>Items Ordered</th>
                                 <th>Total Amount</th>
@@ -44,36 +44,37 @@
                                 <th>Date Placed</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr ng-repeat="order in userOrders" class="hover:bg-gray-50 transition-colors">
+                        <tbody class="text-sm">
+                            <tr ng-repeat="order in userOrders" class="hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-none">
                                 <th>{{ $index + 1 }}</th>
-                                <td class="text-xs font-bold text-gray-400">#{{ order.order_id }}</td>
-                                <td class="font-medium">{{ order.drink_name }}</td>
-                                <td class="font-bold text-coffee-dark">₱{{ order.total_price.toFixed(2) }}</td>
+                                <td class="font-bold text-coffee-light">#{{ order.order_id }}</td>
+                                <td class="font-medium text-gray-700 italic">{{ order.drink_name }}</td>
+                                <td class="font-bold text-gray-800">₱{{ order.total_price | number:2 }}</td>
                                 <td>
-                                    <span class="badge font-semibold py-3 px-4"
+                                    <span class="badge badge-sm border-none py-3 px-4 font-semibold uppercase text-[10px]"
                                           ng-class="{
-                                            'badge-warning': order.status === 'Pending',
-                                            'badge-info': order.status === 'Processing',
-                                            'badge-success': order.status === 'Completed'
+                                            'bg-orange-100 text-orange-600': order.status === 'Pending',
+                                            'bg-blue-100 text-blue-600': order.status === 'Processing',
+                                            'bg-green-100 text-green-600': order.status === 'Completed',
+                                            'bg-red-100 text-red-600': order.status === 'Declined'
                                           }">
                                         {{ order.status }}
                                     </span>
                                 </td>
-                                <td class="text-gray-500 text-sm">{{ order.created_at }}</td>
+                                <td class="text-gray-500 text-xs">{{ order.created_at }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div ng-if="userOrders.length === 0" class="flex-1 flex flex-col items-center justify-center text-center space-y-4 opacity-60">
+                <div ng-if="userOrders.length === 0" class="flex-1 flex flex-col items-center justify-center text-center space-y-4 opacity-60 py-20">
                     <div class="p-6 bg-gray-200 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 4.394 8.25h15.212a1.125 1.125 0 0 1 1.1 1.257Z" />
                         </svg>
                     </div>
                     <h2 class="text-2xl font-bold text-gray-800">No recent orders</h2>
-                    <button class="btn bg-coffee-dark text-white px-10 hover:bg-coffee-medium transition" ng-click="redirect('Menu')">Go to Menu</button>
+                    <button class="btn bg-coffee-dark text-white px-10 hover:bg-black border-none transition" ng-click="redirect('Menu')">Go to Menu</button>
                 </div>
             </div>
         </div>
@@ -83,6 +84,13 @@
         <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
         <div class="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
             <ul class="menu w-full grow bg-coffee-light">
+                <li class="text-white mb-2 pointer-events-none">
+                    <div class="flex items-center gap-2">
+                        <img src="~/Content/assets/logo-coffee-cat.png" alt="logo" class="h-5 w-auto" />
+                        <span class="is-drawer-close:hidden font-bold">Coffee Cat</span>
+                    </div>
+                </li>
+
                 <li class="text-white">
                     <button ng-click="redirect('Home')">
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +110,7 @@
 
                 <li class="text-white">
                     <button ng-click="redirect('Menu')">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white"
+                        <svg class="size-4"
                              aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg"
                              width="24"
@@ -115,7 +123,7 @@
                     </button>
                 </li>
 
-                <li class="text-white">
+                <li class="text-white bg-coffee-dark/20 font-bold">
                     <button ng-click="redirect('UserOrder')">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 24 24"

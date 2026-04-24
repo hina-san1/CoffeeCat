@@ -65,7 +65,6 @@ namespace CoffeeCat.Controllers
             {
                 using (var connect = new OrderingContext())
                 {
-                    // Check if email already exists before creating
                     var existingUser = connect.tbl_users.Any(u => u.email == userInfo.email);
                     if (existingUser)
                     {
@@ -114,12 +113,11 @@ namespace CoffeeCat.Controllers
                         Session["UserID"] = user.user_id;
                         Session["UserRole"] = user.user_role;
 
-                        // FORCE the role into the JSON response
                         return Json(new
                         {
                             success = true,
                             message = "Login Successful",
-                            role = user.user_role // Make sure this is exactly "Admin" in the DB
+                            role = user.user_role 
                         });
                     }
                     return Json(new { success = false, message = "Invalid email or password." });
@@ -140,7 +138,7 @@ namespace CoffeeCat.Controllers
                 {
                     loggedIn = true,
                     username = Session["Username"].ToString(),
-                    role = Session["UserRole"]?.ToString() // Include role here too
+                    role = Session["UserRole"]?.ToString() 
                 }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { loggedIn = false }, JsonRequestBehavior.AllowGet);
@@ -165,22 +163,20 @@ namespace CoffeeCat.Controllers
 
                 using (var connect = new OrderingContext())
                 {
-                    // 1. Create the parent order
                     var orderData = new tbl_orders_model()
                     {
                         user_id = current_user_id,
                         subtotal = subtotal,
                         tax = tax,
                         total = total,
-                        order_status_id = 1, // SET DEFAULT TO 1 (Pending)
+                        order_status_id = 1, 
                         created_at = DateTime.Now,
                         updated_at = DateTime.Now
                     };
 
                     connect.tbl_orders.Add(orderData);
-                    connect.SaveChanges(); // Saves to get the generated order_id
+                    connect.SaveChanges(); 
 
-                    // 2. Insert multiple items for this specific order
                     foreach (var item in order_items)
                     {
                         var itemData = new tbl_order_items_model()
@@ -230,7 +226,6 @@ namespace CoffeeCat.Controllers
                             created_at = o.created_at
                         }).ToList();
 
-                    // Format for the frontend
                     var result = orders.Select(o => new {
                         o.order_id,
                         drink_name = string.Join(", ", o.items_summary),
@@ -262,12 +257,89 @@ namespace CoffeeCat.Controllers
                         {
                             totalUsers = connect.tbl_users.Count(),
                             totalOrders = connect.tbl_orders.Count(),
-                            // Matches status_id 1 in your table
                             pendingOrders = connect.tbl_orders.Count(o => o.order_status_id == 1),
-                            // Matches status_id 3 in your table
                             completedOrders = connect.tbl_orders.Count(o => o.order_status_id == 3)
                         }
                     }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdateOrderStatus(int order_id, string action)
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var order = connect.tbl_orders.FirstOrDefault(o => o.order_id == order_id);
+                    if (order == null) return Json(new { success = false, message = "Order not found." });
+
+                    if (action == "Approve")
+                    {
+                        order.order_status_id = 2; 
+                    }
+                    else if (action == "Complete")
+                    {
+                        order.order_status_id = 3; 
+                    }
+                    else if (action == "Decline")
+                    {
+                        order.order_status_id = 4;
+                    }
+
+                    order.updated_at = DateTime.Now;
+                    connect.SaveChanges();
+
+                    return Json(new { success = true, message = "Order updated successfully!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetAllOrders()
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var orders = (from o in connect.tbl_orders
+                                  join u in connect.tbl_users on o.user_id equals u.user_id
+                                  join s in connect.tbl_statuses on o.order_status_id equals s.status_id
+                                  orderby o.created_at descending
+                                  select new
+                                  {
+                                      o.order_id,
+                                      customer_name = u.first_name + " " + u.last_name,
+                                      total_price = o.total,
+                                      status = s.status_name,
+                                      status_id = o.order_status_id,
+                                      created_at = o.created_at,
+                                      items = (from oi in connect.tbl_order_items
+                                               join d in connect.tbl_drinks on oi.drink_id equals d.drink_id
+                                               where oi.order_id == o.order_id
+                                               select d.drink_name + " (x" + oi.quantity + ")").ToList()
+                                  }).ToList();
+
+                    var result = orders.Select(o => new {
+                        o.order_id,
+                        o.customer_name,
+                        o.total_price,
+                        o.status,
+                        o.status_id,
+                        drink_summary = string.Join(", ", o.items),
+                        date = o.created_at.ToString("MMM dd, hh:mm tt")
+                    });
+
+                    return Json(new { success = true, data = result }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)

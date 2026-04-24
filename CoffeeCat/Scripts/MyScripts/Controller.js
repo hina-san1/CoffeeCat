@@ -237,18 +237,6 @@
         });
     };
 
-    // Check session on page load
-    $scope.checkSession = function () {
-        CoffeeCatService.getSession().then(function (response) {
-            if (response.data.loggedIn) {
-                $scope.isLoggedIn = true;
-                $scope.currentUser = response.data.username;
-                $scope.loadOrders(); 
-            }
-        });
-    };
-    $scope.checkSession();
-
     // Menu Data
     $scope.LoremIpsum = "Experience the rich, smooth blend of our premium beans, crafted to perfection for your daily caffeine fix.";
     $scope.menuItems = [
@@ -264,31 +252,44 @@
         { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.LoremIpsum }
     ];
 
-    /*** Admin Dashboard Logic ***/
+    /*** Admin Logic ***/
+
+    // Session Check
+    $scope.checkSession = function () {
+        CoffeeCatService.getSession().then(function (response) {
+            if (response.data.loggedIn) {
+                $scope.isLoggedIn = true;
+                $scope.currentUser = response.data.username;
+
+                var role = (response.data.role || "").toLowerCase();
+
+                if (role === 'admin') {
+                    // Admin
+                    $scope.loadAdminOrders(); 
+                    $scope.loadCustomers();   
+                    $scope.getStats();        
+                } else {
+                    // Customer 
+                    $scope.loadOrders();      
+                }
+            } else {
+                $scope.isLoggedIn = false;
+                $scope.currentUser = null;
+            }
+        }).catch(function (error) {
+            console.error("Session check failed:", error);
+        });
+    };
+
+    $scope.checkSession();
+
+    // Card Status
     $scope.dashboardStats = {};
 
     $scope.getStats = function () {
         CoffeeCatService.GetDashboardStatsService().then(function (response) {
             if (response.data.success) {
                 $scope.dashboardStats = response.data.data;
-            }
-        });
-    };
-
-    // Call this inside your existing checkSession if role === 'admin'
-    $scope.getStats();
-
-    // Update your existing checkSession to load stats if user is Admin
-    $scope.checkSession = function () {
-        CoffeeCatService.getSession().then(function (response) {
-            if (response.data.loggedIn) {
-
-                // If the role is admin, load the stats
-                if (response.data.role && response.data.role.toLowerCase() === 'admin') {
-                    $scope.loadDashboardStats();
-                } else {
-                    $scope.loadOrders();
-                }
             }
         });
     };
@@ -303,8 +304,29 @@
     ];
 
     // Pie Chart
-    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-    $scope.data = [300, 500, 100];
+    $scope.labels_pie = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+    $scope.data_pie = [300, 500, 100];
+
+    /*** Admin Orders Logic ***/
+    $scope.allOrders = [];
+
+    $scope.loadAdminOrders = function () {
+        CoffeeCatService.GetAllOrdersService().then(function (response) {
+            if (response.data.success) {
+                $scope.allOrders = response.data.data;
+            }
+        });
+    };
+
+    $scope.updateStatus = function (orderId, action) {
+        CoffeeCatService.UpdateStatusService(orderId, action).then(function (response) {
+            if (response.data.success) {
+                Swal.fire('Updated!', 'Order is now ' + action + 'd', 'success');
+                $scope.loadAdminOrders(); 
+                $scope.getStats();        
+            }
+        });
+    };
 
     /*** Admin Users Logic ***/
     $scope.allCustomers = [];
@@ -316,26 +338,8 @@
             }
         });
     };
+});
 
-    // Update your checkSession to include this:
-    $scope.checkSession = function () {
-        CoffeeCatService.getSession().then(function (response) {
-            if (response.data.loggedIn) {
-                $scope.isLoggedIn = true;
-                $scope.currentUser = response.data.username;
-
-                if (response.data.role && response.data.role.toLowerCase() === 'admin') {
-                    $scope.loadCustomers(); 
-                    $scope.getStats();      
-                } else {
-                    $scope.loadOrders();
-                }
-            }
-        });
-    };
-}); 
-
-// Directives stay outside the controller
 app.directive('modalShow', function () {
     return {
         restrict: 'A',

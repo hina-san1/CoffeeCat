@@ -1,12 +1,7 @@
 ﻿app.service("CoffeeCatService", function ($http) {
 
     this.UpsertUserService = function (userInfo) {
-        var response = $http({
-            url: "/CoffeeCat/UpsertUsers",
-            method: "POST",
-            data: userInfo
-        });
-        return response;
+        return $http.post("/CoffeeCat/UpsertUsers", userInfo);
     }
 
     this.LoginUserService = function (loginInfo) {
@@ -35,6 +30,14 @@
 
     this.GetDashboardStatsService = function () {
         return $http.get("/CoffeeCat/GetDashboardStats");
+    };
+
+    this.GetAllOrdersService = function () {
+        return $http.get("/CoffeeCat/GetAllOrders");
+    };
+
+    this.UpdateStatusService = function (orderId, action) {
+        return $http.post("/CoffeeCat/UpdateOrderStatus", { order_id: orderId, action: action });
     };
 
     this.GetAllCustomersService = function () {

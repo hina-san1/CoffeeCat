@@ -14,6 +14,10 @@
             <a href="#about" class="hover:text-coffee-dark hover:underline underline-offset-2 transition">About</a>
             <a href="#services" class="hover:text-coffee-dark hover:underline underline-offset-2 transition">Services</a>
             <a href="#contact" class="hover:text-coffee-dark hover:underline underline-offset-2 transition">Contact</a>
+
+            <a ng-if="isLoggedIn"
+               class="hover:text-coffee-dark hover:underline underline-offset-2 transition cursor-pointer"
+               ng-click="redirect('UserOrder')">My Orders</a>
         </div>
 
         <div class="hidden lg:block">
@@ -42,17 +46,18 @@
                     <li><a href="#services">Services</a></li>
                     <li><a href="#contact">Contact</a></li>
 
+                    <li ng-if="isLoggedIn"><a ng-click="redirect('UserOrder')">My Orders</a></li>
+
                     <li ng-if="!isLoggedIn"><a ng-click="redirect('Login')">Log In</a></li>
                     <li class="bg-coffee-light text-white rounded-3xl" ng-if="!isLoggedIn"><a ng-click="redirect('Signup')">Sign Up</a></li>
 
-                    <li ng-if="isLoggedIn" class="disabled"><span class="font-bold">User: {{ currentUser }}</span></li>
+                    <li ng-if="isLoggedIn" class="disabled"><span class="font-bold text-coffee-dark">User: {{ currentUser }}</span></li>
                     <li ng-if="isLoggedIn"><a class="text-red-500" ng-click="logout()">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="flex-1 flex justify-center lg:justify-between items-center motion-translate-y-in-100">
         <div class="space-y-6 text-center lg:text-left">
             <h2 class="text-5xl leading-18 md:text-6xl font-bold">
@@ -108,8 +113,6 @@
 </section>
 
 <!-- About Section -->
-
-
 <!-- Contact Section -->
 <section id="contact" class="max-w-4xl w-full mx-auto py-20 px-8 text-coffee-light
          timeline-view animate-blurred-fade-in animate-range-[entry_10%_contain_30%]">
