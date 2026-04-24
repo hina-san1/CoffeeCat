@@ -123,7 +123,7 @@
         CoffeeCatService.logoutService().then(function () {
             $scope.isLoggedIn = false;
             $scope.currentUser = null;
-            $scope.redirect("Login");
+            $scope.redirect("Home");
         });
     };
 

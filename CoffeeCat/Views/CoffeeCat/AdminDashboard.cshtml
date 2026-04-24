@@ -117,7 +117,49 @@
                         </div>
                     </div>
                 </div>
-               
+
+                <!-- Users Table -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Recent Users</h3>
+                            <p class="text-sm text-gray-500">The 10 recently registered customers</p>
+                        </div>
+                        <button class="btn btn-sm btn-outline border-coffee-light text-coffee-dark hover:bg-coffee-light hover:border-coffee-light"
+                                ng-click="redirect('AdminUsers')">
+                            View All
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="table w-full">
+                            <thead>
+                                <tr class="text-coffee-dark border-b border-gray-100">
+                                    <th>#</th>
+                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Joined Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in allCustomers | limitTo: 10" class="hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0">
+                                    <th class="text-gray-400 font-normal">{{ $index + 1 }}</th>
+                                    <td class="text-coffee-dark font-bold">{{ user.username }}</td>
+                                    <td class="font-medium text-gray-700">{{ user.first_name }} {{ user.last_name }}</td>
+                                    <td class="text-blue-600">{{ user.email }}</td>
+                                    <td>{{ user.contact || 'N/A' }}</td>
+                                    <td class="text-gray-500 text-sm">{{ user.created_at }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div ng-if="allCustomers.length === 0" class="py-10 text-center opacity-60">
+                        <p>No registered users found.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
