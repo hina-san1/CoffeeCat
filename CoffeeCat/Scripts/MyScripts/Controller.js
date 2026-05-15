@@ -350,7 +350,7 @@ app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
         maintainAspectRatio: false
     };
 
-    // Chart Colors
+    // Bar Chart Colors
     $scope.barColors = [{
         backgroundColor: 'rgba(150, 114, 89, 0.8)',
         borderColor: 'rgba(150, 114, 89, 1)',
@@ -359,6 +359,12 @@ app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(150, 114, 89, 0.8)'
     }];
+
+    // Pie Chart
+    $scope.pieLabels = [];
+    $scope.pieData = [];
+
+    // Pie Chart Colors
     $scope.pieColors = ['#967259', '#634832', '#38220F', '#DDB892', '#B08968'];
     $scope.pieOptions = {
         legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
@@ -366,11 +372,7 @@ app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
         maintainAspectRatio: false
     };
 
-    // Pie Chart
-    $scope.pieLabels = [];
-    $scope.pieData = [];
-
-    // Doughnut Chart (Order Status)
+    // Doughnut Chart 
     $scope.doughnutLabels = [];
     $scope.doughnutData = [];
     $scope.doughnutColors = ['#fbbf24', '#60a5fa', '#4ade80', '#f87171'];
