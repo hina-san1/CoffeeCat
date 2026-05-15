@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -7,14 +7,14 @@
     <div class="drawer-content h-screen overflow-hidden flex flex-col">
         <nav class="navbar w-full bg-base-300 flex justify-between items-center px-4">
             <div class="flex items-center">
-                <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost lg:hidden">
+                <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4">
                         <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
                         <path d="M9 4v16"></path>
                         <path d="M14 10l2 2l-2 2"></path>
                     </svg>
                 </label>
-                <div class="px-4 text-xl font-bold text-coffee-dark">Coffee Cat</div>
+                <div class="px-4 text-xl font-bold">Coffee Cat</div>
             </div>
 
             <div class="flex items-center gap-4">
@@ -49,7 +49,7 @@
                                 <th>{{ $index + 1 }}</th>
                                 <td class="font-bold text-coffee-light">#{{ order.order_id }}</td>
                                 <td class="font-medium text-gray-700 italic">{{ order.drink_name }}</td>
-                                <td class="font-bold text-gray-800">₱{{ order.total_price | number:2 }}</td>
+                                <td class="font-bold text-gray-800">&#8369;{{ order.total_price | number:2 }}</td>
                                 <td>
                                     <span class="badge badge-sm border-none py-3 px-4 font-semibold uppercase text-[10px]"
                                           ng-class="{
@@ -82,7 +82,7 @@
 
     <div class="drawer-side is-drawer-close:overflow-visible">
         <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+        <div class="flex min-h-full flex-col items-start bg-coffee-light is-drawer-close:w-14 is-drawer-open:w-64">
             <ul class="menu w-full grow bg-coffee-light">
                 <li class="text-white mb-2 pointer-events-none">
                     <div class="flex items-center gap-2">
@@ -110,18 +110,24 @@
 
                 <li class="text-white">
                     <button ng-click="redirect('Menu')">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white"
-                             aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg"
-                             width="24"
-                             height="24"
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 24 24"
                              fill="none"
-                             viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10" />
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             class="size-4">
+                            <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+                            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+                            <line x1="6" y1="2" x2="6" y2="4"></line>
+                            <line x1="10" y1="2" x2="10" y2="4"></line>
+                            <line x1="14" y1="2" x2="14" y2="4"></line>
                         </svg>
                         <span class="is-drawer-close:hidden">Menu</span>
                     </button>
                 </li>
+
 
                 <li class="text-white">
                     <button ng-click="redirect('UserOrder')">
@@ -138,6 +144,9 @@
                         <span class="is-drawer-close:hidden">Orders</span>
                     </button>
                 </li>
+            </ul>
+
+            <ul class="menu w-full mt-auto">
                 <li class="text-white">
                     <button ng-click="logout()">
                         <svg xmlns="http://www.w3.org/2000/svg"
