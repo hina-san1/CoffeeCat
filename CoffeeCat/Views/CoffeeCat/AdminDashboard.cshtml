@@ -4,7 +4,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content overflow-hidden flex flex-col">
+    <div class="drawer-content h-screen overflow-hidden flex flex-col">
         <nav class="navbar w-full bg-base-300 flex justify-between items-center px-4">
             <div class="flex items-center">
                 <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
@@ -93,7 +93,7 @@
                             <p class="text-xs text-gray-400 font-medium">Data based on completed orders for {{ year }}</p>
                         </div>
 
-                        <div class="relative w-full h-[300px]">
+                        <div class="relative w-full h-64 md:h-80">
                             <canvas id="bar" class="chart chart-bar"
                                     chart-data="barData" chart-labels="barLabels" chart-series="barSeries"
                                     chart-options="barOptions" chart-colors="barColors">
@@ -110,7 +110,7 @@
                                 <p class="text-xs text-gray-400 font-medium">Top 5 selling items</p>
                             </div>
 
-                            <div class="relative w-full h-[300px]">
+                            <div class="relative w-full h-64 md:h-80">
                                 <canvas id="pie" class="chart chart-pie"
                                         chart-data="pieData" chart-labels="pieLabels" chart-colors="pieColors" chart-options="pieOptions">
                                 </canvas>
@@ -124,7 +124,7 @@
                                 <p class="text-xs text-gray-400 font-medium">Operational status overview</p>
                             </div>
 
-                            <div class="relative w-full h-[300px]">
+                            <div class="relative w-full h-64 md:h-80">
                                 <canvas id="doughnut" class="chart chart-doughnut"
                                         chart-data="doughnutData" chart-labels="doughnutLabels" chart-colors="doughnutColors" chart-options="doughnutOptions">
                                 </canvas>

@@ -3455,6 +3455,9 @@
   .h-52 {
     height: calc(var(--spacing) * 52);
   }
+  .h-64 {
+    height: calc(var(--spacing) * 64);
+  }
   .h-130 {
     height: calc(var(--spacing) * 130);
   }
@@ -4467,6 +4470,11 @@
   .md\:col-span-2 {
     @media (width >= 48rem) {
       grid-column: span 2 / span 2;
+    }
+  }
+  .md\:h-80 {
+    @media (width >= 48rem) {
+      height: calc(var(--spacing) * 80);
     }
   }
   .md\:h-screen {
