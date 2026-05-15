@@ -468,5 +468,33 @@ namespace CoffeeCat.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpGet]
+        public JsonResult GetOrderStatusDistribution()
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var result = (from o in connect.tbl_orders
+                                  join s in connect.tbl_statuses on o.order_status_id equals s.status_id
+                                  group o by new { s.status_id, s.status_name } into g
+                                  orderby g.Key.status_id
+                                  select new { StatusName = g.Key.status_name, Count = g.Count() })
+                                  .ToList();
+
+                    return Json(new
+                    {
+                        success = true,
+                        labels = result.Select(x => x.StatusName).ToList(),
+                        data = result.Select(x => x.Count).ToList()
+                    }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

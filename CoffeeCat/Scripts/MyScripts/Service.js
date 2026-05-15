@@ -51,4 +51,8 @@ app.service("CoffeeCatService", function ($http) {
     this.GetPopularDrinksService = function () {
         return $http.get("/CoffeeCat/GetPopularDrinks");
     };
+
+    this.GetOrderStatusDistributionService = function () {
+        return $http.get("/CoffeeCat/GetOrderStatusDistribution");
+    };
 });

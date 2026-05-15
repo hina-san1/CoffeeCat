@@ -1,4 +1,4 @@
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -86,27 +86,28 @@
 
                 <!-- Charts -->
                 <div class="space-y-4">
-                    <div class="grid lg:grid-cols-5 gap-6">
-                        <!-- Bar Chart -->
-                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 lg:col-span-3">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-bold text-gray-800">Monthly Revenue</h3>
-                                <p class="text-xs text-gray-400 font-medium">Data based on completed orders for {{ year }}</p>
-                            </div>
-
-                            <div class="relative w-full h-[300px]">
-                                <canvas id="bar" class="chart chart-bar"
-                                        chart-data="barData" chart-labels="barLabels" chart-series="barSeries"
-                                        chart-options="barOptions" chart-colors="barColors">
-                                </canvas>
-                            </div>
+                    <!-- Full Width Bar Chart -->
+                    <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 w-full">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">Monthly Revenue</h3>
+                            <p class="text-xs text-gray-400 font-medium">Data based on completed orders for {{ year }}</p>
                         </div>
 
+                        <div class="relative w-full h-[300px]">
+                            <canvas id="bar" class="chart chart-bar"
+                                    chart-data="barData" chart-labels="barLabels" chart-series="barSeries"
+                                    chart-options="barOptions" chart-colors="barColors">
+                            </canvas>
+                        </div>
+                    </div>
+
+                    <!-- Side-by-Side Pie and Doughnut Charts -->
+                    <div class="grid lg:grid-cols-2 gap-6">
                         <!-- Pie Chart -->
-                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100 lg:col-span-2">
+                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-bold text-gray-800">Popular Drinks</h3>
-                                <p class="text-xs text-gray-400 font-medium">Data based on common drinks order for {{ year }}</p>
+                                <p class="text-xs text-gray-400 font-medium">Top 5 selling items</p>
                             </div>
 
                             <div class="relative w-full h-[300px]">
@@ -115,11 +116,25 @@
                                 </canvas>
                             </div>
                         </div>
+
+                        <!-- Doughnut Chart -->
+                        <div class="bg-white p-6 shadow-md rounded-2xl border border-gray-100">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-bold text-gray-800">Order Status Distribution</h3>
+                                <p class="text-xs text-gray-400 font-medium">Operational status overview</p>
+                            </div>
+
+                            <div class="relative w-full h-[300px]">
+                                <canvas id="doughnut" class="chart chart-doughnut"
+                                        chart-data="doughnutData" chart-labels="doughnutLabels" chart-colors="doughnutColors" chart-options="doughnutOptions">
+                                </canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Users Table -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="overflow-x-auto bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div class="flex justify-between items-center mb-6">
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">Recent Users</h3>

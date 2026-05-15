@@ -1,4 +1,4 @@
-﻿app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
+app.controller("CoffeeCatController", function ($scope, CoffeeCatService) {
 
     /*** Get Footer Date ***/
     $scope.year = new Date().getFullYear();
@@ -361,7 +361,7 @@
     }];
     $scope.pieColors = ['#967259', '#634832', '#38220F', '#DDB892', '#B08968'];
     $scope.pieOptions = {
-        legend: { display: true, position: 'left', labels: { usePointStyle: true, padding: 20 } },
+        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
         responsive: true,
         maintainAspectRatio: false
     };
@@ -369,6 +369,16 @@
     // Pie Chart
     $scope.pieLabels = [];
     $scope.pieData = [];
+
+    // Doughnut Chart (Order Status)
+    $scope.doughnutLabels = [];
+    $scope.doughnutData = [];
+    $scope.doughnutColors = ['#fbbf24', '#60a5fa', '#4ade80', '#f87171'];
+    $scope.doughnutOptions = {
+        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+        responsive: true,
+        maintainAspectRatio: false
+    };
 
     $scope.loadChartData = function () {
         CoffeeCatService.GetMonthlyRevenueService().then(function (response) {
@@ -382,6 +392,13 @@
             if (response.data.success) {
                 $scope.pieLabels = response.data.pieLabels;
                 $scope.pieData = response.data.pieData;
+            }
+        });
+
+        CoffeeCatService.GetOrderStatusDistributionService().then(function (response) {
+            if (response.data.success) {
+                $scope.doughnutLabels = response.data.labels;
+                $scope.doughnutData = response.data.data;
             }
         });
     };
