@@ -397,8 +397,13 @@ namespace CoffeeCat.Controllers
                 {
                     var currentYear = DateTime.Now.Year;
 
-                    var monthlyRevenue = connect.tbl_orders
+                    // Fetch to memory first because MySQL EF provider cannot translate .Month inside GroupBy
+                    var ordersThisYear = connect.tbl_orders
                         .Where(o => o.order_status_id == 3 && o.created_at.Year == currentYear)
+                        .Select(o => new { o.created_at, o.total })
+                        .ToList();
+
+                    var monthlyRevenue = ordersThisYear
                         .GroupBy(o => o.created_at.Month)
                         .Select(g => new { Month = g.Key, TotalRevenue = g.Sum(o => o.total) })
                         .ToList();

@@ -94,9 +94,10 @@
                                 <p class="text-xs text-gray-400 font-medium">Data based on completed orders for {{ year }}</p>
                             </div>
 
-                            <div class="relative w-full">
+                            <div class="relative w-full h-[300px]">
                                 <canvas id="bar" class="chart chart-bar"
-                                        chart-data="barData" chart-labels="barLabels" chart-series="barSeries">
+                                        chart-data="barData" chart-labels="barLabels" chart-series="barSeries"
+                                        chart-options="barOptions" chart-colors="barColors">
                                 </canvas>
                             </div>
                         </div>
@@ -108,9 +109,9 @@
                                 <p class="text-xs text-gray-400 font-medium">Data based on common drinks order for {{ year }}</p>
                             </div>
 
-                            <div class="relative w-full">
+                            <div class="relative w-full h-[300px]">
                                 <canvas id="pie" class="chart chart-pie"
-                                        chart-data="pieData" chart-labels="pieLabels">
+                                        chart-data="pieData" chart-labels="pieLabels" chart-colors="pieColors" chart-options="pieOptions">
                                 </canvas>
                             </div>
                         </div>

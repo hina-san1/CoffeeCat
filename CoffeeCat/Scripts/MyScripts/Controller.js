@@ -320,9 +320,51 @@
     };
 
     // Bar Chart
-    $scope.barLabels = [];
-    $scope.barSeries = ['Revenue (₱)'];
-    $scope.barData = [];
+    $scope.barLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    $scope.barSeries = ['Revenue'];
+    $scope.barData = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+    $scope.barOptions = {
+        scales: {
+            xAxes: [{ gridLines: { display: false } }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    callback: function (value) { return '₱' + value.toLocaleString(); }
+                },
+                gridLines: { borderDash: [2, 4], color: 'rgba(0,0,0,0.05)' }
+            }]
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                label: function (tooltipItem, data) {
+                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                    if (label) label += ': ';
+                    label += '₱' + tooltipItem.yLabel.toFixed(2);
+                    return label;
+                }
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // Chart Colors
+    $scope.barColors = [{
+        backgroundColor: 'rgba(150, 114, 89, 0.8)',
+        borderColor: 'rgba(150, 114, 89, 1)',
+        pointBackgroundColor: 'rgba(150, 114, 89, 1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(150, 114, 89, 0.8)'
+    }];
+    $scope.pieColors = ['#967259', '#634832', '#38220F', '#DDB892', '#B08968'];
+    $scope.pieOptions = {
+        legend: { display: true, position: 'left', labels: { usePointStyle: true, padding: 20 } },
+        responsive: true,
+        maintainAspectRatio: false
+    };
 
     // Pie Chart
     $scope.pieLabels = [];
