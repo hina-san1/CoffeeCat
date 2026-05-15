@@ -12,7 +12,6 @@
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#967259',
-                cancelButtonColor: '#d33',
                 confirmButtonText: 'Go to Login',
                 cancelButtonText: 'Stay here'
             }).then((result) => {
@@ -120,10 +119,27 @@
     $scope.isLoggedIn = false;
 
     $scope.logout = function () {
-        CoffeeCatService.LogoutService().then(function () {
-            $scope.isLoggedIn = false;
-            $scope.currentUser = null;
-            $scope.redirect("Home");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will need to login again to access your account.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#967259',
+            confirmButtonText: 'Yes, logout!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                CoffeeCatService.LogoutService().then(function () {
+                    $scope.isLoggedIn = false;
+                    $scope.currentUser = null;
+                    $scope.redirect("Home");
+
+                    Swal.fire(
+                        'Logged Out!',
+                        'You have been successfully logged out.',
+                        'success'
+                    );
+                });
+            }
         });
     };
 
@@ -237,19 +253,29 @@
         });
     };
 
-    // Menu Data
-    $scope.LoremIpsum = "Experience the rich, smooth blend of our premium beans, crafted to perfection for your daily caffeine fix.";
+    // Menu items
+    $scope.icedAmericano = "Our signature espresso shots poured over chilled water and ice for a crisp, clean, and bold awakening.";
+    $scope.icedCappuccino = "A refreshing balance of intense espresso and chilled milk, topped with a velvety layer of cold milk foam.";
+    $scope.icedCaramelMacchiato = "Freshly steamed milk stained with espresso and marked with a buttery, decadent drizzle of premium caramel.";
+    $scope.icedSpanishLatte = "A creamy, sweetened delight featuring condensed milk and bold espresso, served perfectly chilled for a smooth finish.";
+    $scope.icedVanillaLatte = "The timeless classic: rich espresso meets silky milk and the sweet, aromatic warmth of Madagascar vanilla.";
+    $scope.hotAmericano = "Deep, complex espresso tempered with hot water to highlight the subtle floral and nutty notes of our house blend.";
+    $scope.hotCappuccino = "A true barista classic—equal parts espresso, steamed milk, and a thick, luxurious pillow of micro-foam.";
+    $scope.hotEspresso = "The pure essence of our craft. A concentrated, full-bodied shot with a golden crema and lingering cocoa finish.";
+    $scope.matchaLatte = "Premium ceremonial-grade stone-ground green tea whisked with silky milk for a vibrant, earthy, and energizing sip.";
+    $scope.strawberryMatcha = "The perfect duo of earthy matcha and sweet, tangy strawberry puree, layered beautifully for a fruity twist on a favorite.";
+
     $scope.menuItems = [
-        { id: 1, name: 'Iced Americano', price: 110.00, category: 'iced', image: '/Content/assets/iced americano.png', description: $scope.LoremIpsum },
-        { id: 2, name: 'Iced Cappuccino', price: 130.00, category: 'iced', image: '/Content/assets/iced cappuccino.png', description: $scope.LoremIpsum },
-        { id: 3, name: 'Iced Caramel Macchiato', price: 150.00, category: 'iced', image: '/Content/assets/iced caramel macchiato.png', description: $scope.LoremIpsum, },
-        { id: 4, name: 'Iced Spanish Latte', price: 145.00, category: 'iced', image: '/Content/assets/iced spanish latte.png', description: $scope.LoremIpsum, },
-        { id: 5, name: 'Iced Vanilla Latte', price: 140.00, category: 'iced', image: '/Content/assets/iced vanilla latte.png', description: $scope.LoremIpsum, },
-        { id: 6, name: 'Hot Americano', price: 100.00, category: 'hot', image: '/Content/assets/hot americano.png', description: $scope.LoremIpsum },
-        { id: 7, name: 'Hot Cappuccino', price: 125.00, category: 'hot', image: '/Content/assets/hot cappuccino.png', description: $scope.LoremIpsum },
-        { id: 8, name: 'Hot Espresso', price: 110.00, category: 'hot', image: '/Content/assets/hot espresso.png', description: $scope.LoremIpsum },
-        { id: 9, name: 'Matcha Latte', price: 150.00, category: 'matcha', image: '/Content/assets/matcha latte.png', description: $scope.LoremIpsum, },
-        { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.LoremIpsum }
+        { id: 1, name: 'Iced Americano', price: 110.00, category: 'iced', image: '/Content/assets/iced americano.png', description: $scope.icedAmericano},
+        { id: 2, name: 'Iced Cappuccino', price: 130.00, category: 'iced', image: '/Content/assets/iced cappuccino.png', description: $scope.icedCappuccino },
+        { id: 3, name: 'Iced Caramel Macchiato', price: 150.00, category: 'iced', image: '/Content/assets/iced caramel macchiato.png', description: $scope.icedCaramelMacchiato },
+        { id: 4, name: 'Iced Spanish Latte', price: 145.00, category: 'iced', image: '/Content/assets/iced spanish latte.png', description: $scope.icedSpanishLatte},
+        { id: 5, name: 'Iced Vanilla Latte', price: 140.00, category: 'iced', image: '/Content/assets/iced vanilla latte.png', description: $scope.icedVanillaLatte },
+        { id: 6, name: 'Hot Americano', price: 100.00, category: 'hot', image: '/Content/assets/hot americano.png', description: $scope.hotAmericano },
+        { id: 7, name: 'Hot Cappuccino', price: 125.00, category: 'hot', image: '/Content/assets/hot cappuccino.png', description: $scope.hotCappuccino },
+        { id: 8, name: 'Hot Espresso', price: 110.00, category: 'hot', image: '/Content/assets/hot espresso.png', description: $scope.hotEspresso },
+        { id: 9, name: 'Matcha Latte', price: 150.00, category: 'matcha', image: '/Content/assets/matcha latte.png', description: $scope.matchaLatte },
+        { id: 10, name: 'Strawberry Matcha', price: 165.00, category: 'matcha', image: '/Content/assets/strawberry matcha.png', description: $scope.strawberryMatcha }
     ];
 
     /*** Admin Logic ***/
