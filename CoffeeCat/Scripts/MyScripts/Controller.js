@@ -266,10 +266,10 @@
     $scope.strawberryMatcha = "The perfect duo of earthy matcha and sweet, tangy strawberry puree, layered beautifully for a fruity twist on a favorite.";
 
     $scope.menuItems = [
-        { id: 1, name: 'Iced Americano', price: 110.00, category: 'iced', image: '/Content/assets/iced americano.png', description: $scope.icedAmericano},
+        { id: 1, name: 'Iced Americano', price: 110.00, category: 'iced', image: '/Content/assets/iced americano.png', description: $scope.icedAmericano },
         { id: 2, name: 'Iced Cappuccino', price: 130.00, category: 'iced', image: '/Content/assets/iced cappuccino.png', description: $scope.icedCappuccino },
         { id: 3, name: 'Iced Caramel Macchiato', price: 150.00, category: 'iced', image: '/Content/assets/iced caramel macchiato.png', description: $scope.icedCaramelMacchiato },
-        { id: 4, name: 'Iced Spanish Latte', price: 145.00, category: 'iced', image: '/Content/assets/iced spanish latte.png', description: $scope.icedSpanishLatte},
+        { id: 4, name: 'Iced Spanish Latte', price: 145.00, category: 'iced', image: '/Content/assets/iced spanish latte.png', description: $scope.icedSpanishLatte },
         { id: 5, name: 'Iced Vanilla Latte', price: 140.00, category: 'iced', image: '/Content/assets/iced vanilla latte.png', description: $scope.icedVanillaLatte },
         { id: 6, name: 'Hot Americano', price: 100.00, category: 'hot', image: '/Content/assets/hot americano.png', description: $scope.hotAmericano },
         { id: 7, name: 'Hot Cappuccino', price: 125.00, category: 'hot', image: '/Content/assets/hot cappuccino.png', description: $scope.hotCappuccino },
@@ -290,11 +290,12 @@
                 var role = (response.data.role || "").toLowerCase();
 
                 if (role === 'admin') {
-                    $scope.loadAdminOrders(); 
-                    $scope.loadCustomers();   
+                    $scope.loadAdminOrders();
+                    $scope.loadCustomers();
                     $scope.getStats();
+                    $scope.loadChartData();
                 } else {
-                    $scope.loadOrders();      
+                    $scope.loadOrders();
                 }
             } else {
                 $scope.isLoggedIn = false;
@@ -319,18 +320,29 @@
     };
 
     // Bar Chart
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    $scope.series = ['Series A', 'Series B'];
+    $scope.barLabels = [];
+    $scope.barSeries = ['Revenue (₱)'];
+    $scope.barData = [];
 
-    $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
     // Pie Chart
-    $scope.data = [
-        [65, 59, 90, 81, 56, 55, 40],
-        [28, 48, 40, 19, 96, 27, 100]
-    ];
+    $scope.pieLabels = [];
+    $scope.pieData = [];
+
+    $scope.loadChartData = function () {
+        CoffeeCatService.GetMonthlyRevenueService().then(function (response) {
+            if (response.data.success) {
+                $scope.barLabels = response.data.barLabels;
+                $scope.barData = [response.data.barData];
+            }
+        });
+
+        CoffeeCatService.GetPopularDrinksService().then(function (response) {
+            if (response.data.success) {
+                $scope.pieLabels = response.data.pieLabels;
+                $scope.pieData = response.data.pieData;
+            }
+        });
+    };
 
     /*** Admin Orders Logic ***/
     $scope.allOrders = [];
@@ -347,8 +359,9 @@
         CoffeeCatService.UpdateStatusService(orderId, action).then(function (response) {
             if (response.data.success) {
                 Swal.fire('Updated!', 'Order is now ' + action + 'd', 'success');
-                $scope.loadAdminOrders(); 
-                $scope.getStats();        
+                $scope.loadAdminOrders();
+                $scope.getStats();
+                $scope.loadChartData();
             }
         });
     };

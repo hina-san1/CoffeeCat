@@ -1,4 +1,4 @@
-﻿app.service("CoffeeCatService", function ($http) {
+app.service("CoffeeCatService", function ($http) {
 
     this.UpsertUserService = function (userInfo) {
         return $http.post("/CoffeeCat/UpsertUsers", userInfo);
@@ -42,5 +42,13 @@
 
     this.GetAllCustomersService = function () {
         return $http.get("/CoffeeCat/GetAllCustomers");
+    };
+
+    this.GetMonthlyRevenueService = function () {
+        return $http.get("/CoffeeCat/GetMonthlyRevenue");
+    };
+
+    this.GetPopularDrinksService = function () {
+        return $http.get("/CoffeeCat/GetPopularDrinks");
     };
 });

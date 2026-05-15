@@ -1,4 +1,4 @@
-﻿using CoffeeCat.Models.Context;
+using CoffeeCat.Models.Context;
 using CoffeeCat.Models.Tables;
 using System;
 using System.Collections.Generic;
@@ -380,6 +380,82 @@ namespace CoffeeCat.Controllers
                     });
 
                     return Json(new { success = true, data = result }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetMonthlyRevenue()
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var currentYear = DateTime.Now.Year;
+
+                    var monthlyRevenue = connect.tbl_orders
+                        .Where(o => o.order_status_id == 3 && o.created_at.Year == currentYear)
+                        .GroupBy(o => o.created_at.Month)
+                        .Select(g => new { Month = g.Key, TotalRevenue = g.Sum(o => o.total) })
+                        .ToList();
+
+                    var months = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+                    var barLabels = new List<string>();
+                    var barData = new List<decimal>();
+
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        barLabels.Add(months[i - 1]);
+                        var revenue = monthlyRevenue.FirstOrDefault(m => m.Month == i)?.TotalRevenue ?? 0;
+                        barData.Add(revenue);
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        barLabels = barLabels,
+                        barData = barData
+                    }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetPopularDrinks()
+        {
+            try
+            {
+                using (var connect = new OrderingContext())
+                {
+                    var currentYear = DateTime.Now.Year;
+
+                    var popularDrinks = (from oi in connect.tbl_order_items
+                                         join o in connect.tbl_orders on oi.order_id equals o.order_id
+                                         join d in connect.tbl_drinks on oi.drink_id equals d.drink_id
+                                         where o.order_status_id == 3 && o.created_at.Year == currentYear
+                                         group oi by d.drink_name into g
+                                         orderby g.Sum(x => x.quantity) descending
+                                         select new { DrinkName = g.Key, TotalQuantity = g.Sum(x => x.quantity) })
+                                         .Take(5)
+                                         .ToList();
+
+                    var pieLabels = popularDrinks.Select(d => d.DrinkName).ToList();
+                    var pieData = popularDrinks.Select(d => d.TotalQuantity).ToList();
+
+                    return Json(new
+                    {
+                        success = true,
+                        pieLabels = pieLabels,
+                        pieData = pieData
+                    }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)

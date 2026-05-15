@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -96,8 +96,7 @@
 
                             <div class="relative w-full">
                                 <canvas id="bar" class="chart chart-bar"
-                                        chart-data="data" chart-labels="labels">
-                                    chart-series="series"
+                                        chart-data="barData" chart-labels="barLabels" chart-series="barSeries">
                                 </canvas>
                             </div>
                         </div>
@@ -111,7 +110,7 @@
 
                             <div class="relative w-full">
                                 <canvas id="pie" class="chart chart-pie"
-                                        chart-data="data" chart-labels="labels" chart-options="options">
+                                        chart-data="pieData" chart-labels="pieLabels">
                                 </canvas>
                             </div>
                         </div>
